@@ -1,0 +1,79 @@
+\documentclass[a4paper]{article}
+
+\usepackage[francais]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{xspace}
+
+\usepackage{xcolor}
+
+\usepackage{hyperref}
+
+\usepackage{listings}
+
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{ToDo} [ \emph{#1} ]}}
+\newcommand{\fixme}[1]{\textcolor{purple}{\textbf{FixMe} [ \emph{#1} ]}}
+\newcommand{\note}[1]{\textcolor{blue}{\textbf{Note} [ \emph{#1} ]}}
+
+\lstdefinestyle{log}{
+  emptylines=1,
+  breaklines=true,
+  moredelim=**[is][\color{blue}]{@}{.},
+  moredelim=**[is][\color{purple}]{!}{.},
+  moredelim=**[is][\color{red}]{?}{.},
+  moredelim=**[is][\color{orange}]{£}{.},
+  xleftmargin=\parindent,
+  basicstyle=\scriptsize\sffamily
+}
+
+
+\definecolor{silver}{rgb}{0.7,0.7,0.7}
+\definecolor{green}{rgb}{0,0.6,0}
+
+\lstdefinestyle{C}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  xleftmargin=\parindent,
+  language=C,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green},
+  commentstyle=\itshape\color{silver},
+  identifierstyle=\color{black},
+  stringstyle=\color{red},
+  frame=l,
+  numbers=left
+}
+
+
+
+
+
+\begin{document}
+
+\title{CBD - Évaluation des performances CPU\\ et réseau des machines virtuelles}
+\author{Florestan De Moor, Solène Mirliaz\\ ENS Rennes, Université de Rennes 1}
+\date{01 Mars 2017}
+
+\maketitle
+
+\section{Préambule}
+
+La machine virtuelle est configurée de manière à pouvoir utiliser le réseau Wi-Fi.
+On peut donc installer \texttt{htop} dessus.
+
+On peut s'y connecter en utilisant la commande \texttt{virsh console} ou encore par SSH avec l'adresse IP choisie dans le fichier de configuration.
+
+\section{Performances CPU}
+
+\paragraph{Question 2.1.} lorem ipsum
+
+\section{Performances réseau}
+
+\section{Migrons}
+
+
+
+\end{document}
