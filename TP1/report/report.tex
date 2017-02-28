@@ -82,10 +82,59 @@ La machine virtuelle est globalement plus rapide que la Debian hôte.
 \paragraph{Question 2.3.} En imposant le partage du même CPU, les deux VM sont ralenties, avec un temps moyen de 49,3s et 51,9s pour chacune.
 
 \section{Performances réseau}
-\paragraph{Question 3.1.}
+\paragraph{Question 3.1.} On lance une série de \texttt{ping} entre différentes machines. Le premier \texttt{ping} n'est pas pris en compte dans le calcul de la moyenne car il est généralement plus lent en raison de la configuration de la connexion.
 \begin{center}
-\begin{tabular}{c c}
-
+\begin{tabular}{r}
+VMs sur le\\ même serveur\\ \hline
+0.021 ms\\
+0.008 ms\\
+0.015 ms\\
+0.015 ms\\
+0.015 ms\\
+0.015 ms\\
+0.018 ms\\
+0.016 ms\\
+0.015 ms\\
+0.015 ms
+\end{tabular}
+\begin{tabular}{r}
+VMs sur deux\\ serveurs différents\\ \hline
+0.709 ms\\
+0.398 ms\\
+0.410 ms\\
+0.414 ms\\
+0.410 ms\\
+0.406 ms\\
+0.408 ms\\
+0.408 ms\\
+0.413 ms\\
+0.408 ms
+\end{tabular}
+\begin{tabular}{r}
+\\Entre deux serveurs\\ \hline
+0.376 ms \\
+0.109 ms \\
+0.110 ms \\
+0.109 ms \\
+0.109 ms \\
+0.107 ms \\
+0.110 ms \\
+0.112 ms \\
+0.109 ms \\
+0.087 ms
+\end{tabular}
+\begin{tabular}{r}
+Entre machine \\virtuelle et hôte \\ \hline
+0.375 ms \\
+0.354 ms \\
+0.358 ms \\
+0.310 ms \\
+0.336 ms \\
+0.345 ms \\
+0.329 ms \\
+0.309 ms \\
+0.310 ms \\
+0.310 ms
 \end{tabular}
 \end{center}
 
