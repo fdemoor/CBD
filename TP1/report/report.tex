@@ -68,9 +68,26 @@ On peut s'y connecter en utilisant la commande \texttt{virsh console} ou encore 
 
 \section{Performances CPU}
 
-\paragraph{Question 2.1.} lorem ipsum
+\paragraph{Question 2.1.} On lance quatre exécutions des tours de Hanoï (les temps sont en secondes, la sortie a été redirigée vers un fichier).
+\begin{center}
+\begin{tabular}{r|l l l l}
+Debian normale & 6,147 & 9,190 & 10,127 & 10,208 \\
+Machine virtuelle & 6,443 & 6,444 & 6,437 & 6,514
+\end{tabular}
+\end{center}
+La machine virtuelle est globalement plus rapide que la Debian hôte.
+
+\paragraph{Question 2.2.} En lançant les tours de Hanoï en parallèle sur les deux machines virtuelles on obtient un temps moyen de 42s et 46s pour chacune des deux machines (contre 25s pour l'exécution sur l'hôte seul). En étant en parallèles, les deux machines doivent se partager les ressources et sont donc plus lentes que seules. Grâce à \texttt{htop} on peut observer que le partage des ressources CPU n'est pas fixe: les machines virtuelles se "baladent" sur les cœurs.
+
+\paragraph{Question 2.3.} En imposant le partage du même CPU, les deux VM sont ralenties, avec un temps moyen de 49,3s et 51,9s pour chacune.
 
 \section{Performances réseau}
+\paragraph{Question 3.1.}
+\begin{center}
+\begin{tabular}{c c}
+
+\end{tabular}
+\end{center}
 
 \section{Migrons}
 
