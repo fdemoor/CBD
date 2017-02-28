@@ -77,7 +77,7 @@ Machine virtuelle & 6,443 & 6,444 & 6,437 & 6,514
 \end{center}
 La machine virtuelle est globalement plus rapide que la Debian hôte.
 
-\paragraph{Question 2.2.} En lançant les tours de Hanoï en parallèle sur les deux machines virtuelles on obtient un temps moyen de 42s et 46s pour chacune des deux machines (contre 25s pour l'exécution sur l'hôte seul). En étant en parallèles, les deux machines doivent se partager les ressources et sont donc plus lentes que seules. Grâce à \texttt{htop} on peut observer que le partage des ressources CPU n'est pas fixe: les machines virtuelles se "baladent" sur les cœurs.
+\paragraph{Question 2.2.} En lançant les tours de Hanoï en parallèle sur les deux machines virtuelles, on obtient un temps moyen de 42s et 46s pour chacune des deux machines (contre 25s pour l'exécution sur l'hôte seul). En étant en parallèles, les deux machines doivent se partager les ressources et sont donc plus lentes que seules. Grâce à \texttt{htop} on peut observer que le partage des ressources CPU n'est pas fixe: les machines virtuelles se "baladent" sur les cœurs.
 
 \paragraph{Question 2.3.} En imposant le partage du même CPU, les deux VM sont ralenties, avec un temps moyen de 49,3s et 51,9s pour chacune.
 
@@ -89,8 +89,41 @@ La machine virtuelle est globalement plus rapide que la Debian hôte.
 \end{tabular}
 \end{center}
 
+\paragraph{Question 3.2.}
+Bande passante entre deux VMs sur serveurs différents mesurée avec \texttt{iperf} : 803 Mbits/sec
+
 \section{Migrons}
 
+\paragraph{Question 4.1.}
+On a pu migrer une machine virtuelle d'un serveur à un autre avec la commande :
+
+\texttt{virsh migrate vm-name qemu+ssh://target/system}
+
+\noindent Nous avons mesuré que cela prenait en moyenne 2.2 à 2.5s.
+
+\paragraph{Question 4.2.}
+On peut migrer en parallèle plusieurs machines virtuelles d'un serveur source à un serveur destination.
+Cela affecte en revanche le temps de calcul.
+Par exemple, on a obtenu un temps de 3.9s pour une migration lancée alors qu'il y en avait déjà une en cours.
+
+\paragraph{Question 4.3.}
+On peut migrer en parallèle une machine virtuelle d'un serveur A vers un serveur B et une autre du serveur B vers le serveur A.
+Cela impacte cependant le temps de migration, nous avons obtenu 3.8 et 3.9s pour les deux migrations.
+
+\paragraph{Question 4.4.}
+Le temps de migration d'une machine virtuelle contenant un fichier d'1 Go est impacté en fonction de la bande passante entre les deux serveurs.
+Dans notre cas, la bande passante mesurée était de 803 Mbits/sec, la migration doit donc être plus longue au vu de la taille du fichier.
+Nous avons effectivement constaté en pratique un temps de migration plus élevé, de l'ordre de 4.4s.
+
+\paragraph{Question 4.5.}
+Nous avons créé une autre machine virtuelle avec des propriétés différentes d'une première VM, à savoir deux fois plus de mémoire, et deux fois plus de CPUs.
+Nous n'avons pas constaté de modification du temps de migration qui était toujours d'environ 2.4s.
+
+\paragraph{Question 4.6.}
+Nous avons exécuté le programme des tours de Hanoï avec \(n=25\), en redirigeant la sortie, sur un serveur.
+Le temps obtenu était d'environ 6.4s.
+Nous avons ensuite relancé une exécution, mais en lançant en parallèle une migration de machine virtuelle.
+Nous avons constaté le même temps d'exécution, il semble que le temps d'interruption de service ait été négligeable.
 
 
 \end{document}
