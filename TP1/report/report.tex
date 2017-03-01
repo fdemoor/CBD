@@ -68,73 +68,44 @@ On peut s'y connecter en utilisant la commande \texttt{virsh console} ou encore 
 
 \section{Performances CPU}
 
-\paragraph{Question 2.1.} On lance quatre exécutions des tours de Hanoï (les temps sont en secondes, la sortie a été redirigée vers un fichier).
+\paragraph{Question 2.1.} On lance quatre exécutions des tours de Hanoï. On obtient les temps suivants, exprimés en secondes (la sortie a été redirigée vers un fichier).
 \begin{center}
-\begin{tabular}{r|l l l l}
-Debian normale & 6,147 & 9,190 & 10,127 & 10,208 \\
-Machine virtuelle & 6,443 & 6,444 & 6,437 & 6,514
+\begin{tabular}{r|l l l l|l}
+\multicolumn{5}{c|}{}&Moyenne (s) \\
+Debian normale & 6,147 & 9,190 & 10,127 & 10,208 & 8,918 \\
+Machine virtuelle & 6,443 & 6,444 & 6,437 & 6,514 & 6,4595
 \end{tabular}
 \end{center}
-La machine virtuelle est globalement plus rapide que la Debian hôte.
+La machine virtuelle est globalement plus rapide que la Debian hôte ce qui peut sembler étonnant. La machine hôte devant aussi faire fonctionner la machine virtuelle on peut supposer que cela impacte ses performances.
 
 \paragraph{Question 2.2.} En lançant les tours de Hanoï en parallèle sur les deux machines virtuelles, on obtient un temps moyen de 42s et 46s pour chacune des deux machines (contre 25s pour l'exécution sur l'hôte seul). En étant en parallèles, les deux machines doivent se partager les ressources et sont donc plus lentes que seules. Grâce à \texttt{htop} on peut observer que le partage des ressources CPU n'est pas fixe: les machines virtuelles se "baladent" sur les cœurs.
+\par Un tel fonctionnement permet une meilleur répartition de la charge de travail, évitant notamment la surchauffe du matériel.
 
 \paragraph{Question 2.3.} En imposant le partage du même CPU, les deux VM sont ralenties, avec un temps moyen de 49,3s et 51,9s pour chacune.
 
 \section{Performances réseau}
 \paragraph{Question 3.1.} On lance une série de \texttt{ping} entre différentes machines. Le premier \texttt{ping} n'est pas pris en compte dans le calcul de la moyenne car il est généralement plus lent en raison de la configuration de la connexion.
 \begin{center}
-\begin{tabular}{r}
-VMs sur le\\ même serveur\\ \hline
-0.021 ms\\
-0.008 ms\\
-0.015 ms\\
-0.015 ms\\
-0.015 ms\\
-0.015 ms\\
-0.018 ms\\
-0.016 ms\\
-0.015 ms\\
-0.015 ms
-\end{tabular}
-\begin{tabular}{r}
-VMs sur deux\\ serveurs différents\\ \hline
-0.709 ms\\
-0.398 ms\\
-0.410 ms\\
-0.414 ms\\
-0.410 ms\\
-0.406 ms\\
-0.408 ms\\
-0.408 ms\\
-0.413 ms\\
-0.408 ms
-\end{tabular}
-\begin{tabular}{r}
-\\Entre deux serveurs\\ \hline
-0.376 ms \\
-0.109 ms \\
-0.110 ms \\
-0.109 ms \\
-0.109 ms \\
-0.107 ms \\
-0.110 ms \\
-0.112 ms \\
-0.109 ms \\
-0.087 ms
-\end{tabular}
-\begin{tabular}{r}
-Entre machine \\virtuelle et hôte \\ \hline
-0.375 ms \\
-0.354 ms \\
-0.358 ms \\
-0.310 ms \\
-0.336 ms \\
-0.345 ms \\
-0.329 ms \\
-0.309 ms \\
-0.310 ms \\
-0.310 ms
+\begin{tabular}{r r r r}
+VMs sur &
+VMs sur deux &
+Entre &
+Entre machine \\
+le même serveur &
+serveurs différents &
+deux serveurs &
+virtuelle et hôte \\ \hline
+0.021 ms & 0.709 ms & 0.376 ms & 0.375 ms \\
+0.008 ms & 0.398 ms & 0.109 ms & 0.354 ms \\
+0.015 ms & 0.410 ms & 0.110 ms & 0.358 ms \\
+0.015 ms & 0.414 ms & 0.109 ms & 0.310 ms \\
+0.015 ms & 0.410 ms & 0.109 ms & 0.336 ms \\
+0.015 ms & 0.406 ms & 0.107 ms & 0.345 ms \\
+0.018 ms & 0.408 ms & 0.110 ms & 0.329 ms \\
+0.016 ms & 0.408 ms & 0.112 ms & 0.309 ms \\
+0.015 ms & 0.413 ms & 0.109 ms & 0.310 ms \\
+0.015 ms & 0.408 ms & 0.087 ms & 0.310 ms \\ \hline
+0.015 ms & 0.408 ms & 0.106 ms & 0.329 ms
 \end{tabular}
 \end{center}
 
@@ -148,31 +119,63 @@ On a pu migrer une machine virtuelle d'un serveur à un autre avec la commande :
 
 \texttt{virsh migrate vm-name qemu+ssh://target/system}
 
-\noindent Nous avons mesuré que cela prenait en moyenne 2.2 à 2.5s.
+\noindent Le tableau ci-dessous donne les temps d'exécution du transfert. On obtient une moyenne de 2.20s.
+\begin{center}
+\begin{tabular}{r r}
+De A vers B (s) & De B vers A (s) \\ \hline
+2.188 & 2.209 \\ 
+2.186 & 2.177 \\
+2.214 & 2.224
+\end{tabular}
+\end{center}
 
 \paragraph{Question 4.2.}
 On peut migrer en parallèle plusieurs machines virtuelles d'un serveur source à un serveur destination.
-Cela affecte en revanche le temps de calcul.
-Par exemple, on a obtenu un temps de 3.9s pour une migration lancée alors qu'il y en avait déjà une en cours.
-
+Cela affecte en revanche le temps de calcul. On peut comparer les résultats ci-dessous avec ceux-de la question précédente. La moyenne obtenue est alors 2.97sec, soit un écart relatif de 35\% par rapport à la question précédente.
+\begin{center}
+\begin{tabular}{r r}
+Transfert VM 1 (s) & Transfert VM 2 (s) \\ \hline
+3.290 & 3.208 \\
+2.945 & 2.673 \\
+2.613 & 3.084
+\end{tabular}
+\end{center}
+\par Cependant, le temps total reste inférieur à la somme des deux migrations, la parallélisation reste donc intéressante.
 \paragraph{Question 4.3.}
 On peut migrer en parallèle une machine virtuelle d'un serveur A vers un serveur B et une autre du serveur B vers le serveur A.
 Cela impacte cependant le temps de migration, nous avons obtenu 3.8 et 3.9s pour les deux migrations.
 
 \paragraph{Question 4.4.}
-Le temps de migration d'une machine virtuelle contenant un fichier d'1 Go est impacté en fonction de la bande passante entre les deux serveurs.
-Dans notre cas, la bande passante mesurée était de 803 Mbits/sec, la migration doit donc être plus longue au vu de la taille du fichier.
-Nous avons effectivement constaté en pratique un temps de migration plus élevé, de l'ordre de 4.4s.
+Le temps de migration d'une machine virtuelle contenant un fichier d'1 Go (=8000 Mbits) est impacté en fonction de la bande passante entre les deux serveurs.
+Dans notre cas, la bande passante mesurée était de 803 Mbits/sec, la migration doit donc être plus longue d'environ 10sec au vu de la taille du fichier.
+Nous avons effectivement constaté en pratique un temps de migration plus élevé.
+\begin{center}
+\begin{tabular}{r | r r r r | r}
+\multicolumn{5}{c}{}& Moyenne\\
+Temps de migration & 3.235 & 3.321 & 3.279 & 3.221 & 3.264 s
+\end{tabular}
+\end{center}
+\noindent Cependant on est loin des 10s supplémentaires attendues.
 
 \paragraph{Question 4.5.}
 Nous avons créé une autre machine virtuelle avec des propriétés différentes d'une première VM, à savoir deux fois plus de mémoire, et deux fois plus de CPUs.
-Nous n'avons pas constaté de modification du temps de migration qui était toujours d'environ 2.4s.
+On observe un temps de migration plus important de 20\% en moyenne.
+\begin{center}
+\begin{tabular}{r | r r r r | r}
+\multicolumn{5}{c}{}& Moyenne\\
+Temps de migration & 2.781 & 2.782 & 2.824 & 2.678 & 2.766 s
+\end{tabular}
+\end{center}
 
 \paragraph{Question 4.6.}
-Nous avons exécuté le programme des tours de Hanoï avec \(n=25\), en redirigeant la sortie, sur un serveur.
-Le temps obtenu était d'environ 6.4s.
-Nous avons ensuite relancé une exécution, mais en lançant en parallèle une migration de machine virtuelle.
-Nous avons constaté le même temps d'exécution, il semble que le temps d'interruption de service ait été négligeable.
+Nous avons exécuté le programme des tours de Hanoï avec \(n=24\), en redirigeant la sortie, sur un serveur.
+\begin{center}
+\begin{tabular}{r | r r r r | r}
+\multicolumn{5}{c}{}& Moyenne\\
+Temps d'exécution de Hanoï & 3.058 & 4.611 & 4.699 & 4.583 & 4.238 s
+\end{tabular}
+\end{center}
+Nous avons ensuite relancé une exécution, mais en lançant en parallèle une migration de machine virtuelle. Elle a duré 0.556s et Hanoï 4.616s. D'après la moyenne des temps d'exécution, on peut en déduire que le temps de migration a provoqué une interruption du programme d'environ 0.4s.
 
 
 \end{document}
