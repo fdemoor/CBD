@@ -1,0 +1,88 @@
+\documentclass[11pt]{beamer}
+\usetheme{Luebeck}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{caption}
+
+\usepackage{subfig}
+\captionsetup{labelformat=empty}
+\usepackage{xcolor}
+
+%% Defining new colors %%
+\definecolor{Green}{RGB}{0,182,0}
+\setbeamercolor{normal text}{fg=black,bg=white}
+\setbeamercolor{structure}{fg=Green}
+\setbeamercolor{palette quaternary}{fg=white, bg=black}
+
+%% REVISION MACROS
+
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{ToDo}\ifx&#1&\else ~[\emph{#1} ]~\fi}}
+\newcommand{\fixme}[1]{\textcolor{purple}{\textbf{FixMe}\ifx&#1&\else ~[ \emph{#1} ]~\fi}}
+
+
+%% Tikz for picture drawing %%
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+
+%%
+\title{Cloud and Big Data}
+\subtitle{Data Skew in Map-Reduce}
+\date{April 4th, 2017}
+\author{Florestan De Moor, Jeremy Thibault}
+
+%%
+\useoutertheme[subsection=false]{smoothbars}
+
+\setbeamertemplate{footline}{\hspace*{\fill}\insertframenumber/\inserttotalframenumber\hspace*{0.3cm}}
+\setbeamerfont{footline}{series=\bfseries,size=\fontsize{8}{12}\selectfont}
+
+\setbeamertemplate{navigation symbols}{}
+
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+
+\graphicspath{{../img/}}
+
+\begin{document}
+
+
+\begin{frame}
+\maketitle
+\end{frame}
+
+\section{Introduction}
+
+\begin{frame}{Sommaire}
+\tableofcontents
+\end{frame}
+
+\section{What is data skew?}
+
+\subsection{Definition}
+
+\subsection{Map side}
+
+\subsection{Reduce side}
+
+\begin{frame}
+\end{frame}
+
+\section{How to handle data skew in Map-Reduce?}
+
+\subsection{Overview of some existing algorithms}
+
+\subsection{Focus on an algorithm (Skewtune?)}
+
+\begin{frame}
+\end{frame}
+
+\section{Conclusion}
+
+\begin{frame}
+\end{frame}
+
+
+
+\end{document}
