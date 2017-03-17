@@ -1,0 +1,25 @@
+201703170715_0003 : expiry 30sec, kill avant la fin du map, 10Go
+201703170735_0001 : pareil, 5Go, kill après la fin du map
+201703170805_0003 : question 3 : benchmark sort : 5Go
+				 benchmark word count : 1Go
+201703170805_0004
+(les deux derniers)
+
+201703170818_0001 : intéressant
+201703170818_0002
+201703170822_0001
+201703170822_0002
+
+Question 2.1 : 
+	Sort O.O5 5Go 805_0003
+	Word count 0.05 1Go 805_0004
+ 
+	Sort O.5 5Go 818_0001
+	Word count 0.5 1Go 818_0002
+
+	Sort 1 5Go 822_0001
+	Word count 1 1Go 822_0002
+
+ 
+Question 1.2 :
+	751_0001 Sort 5Go 60sec kill reduce
