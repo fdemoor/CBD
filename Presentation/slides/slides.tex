@@ -16,9 +16,19 @@
 
 %% Defining new colors %%
 \definecolor{Orange}{RGB}{255,140,30}
+\definecolor{DarkBlue}{RGB}{35,10,73}
+\definecolor{LightBlue}{RGB}{204,204,255}
+\definecolor{DarkRed}{RGB}{135,13,13}
 \setbeamercolor{normal text}{fg=black,bg=white}
-\setbeamercolor{structure}{fg=Orange}
-\setbeamercolor{palette quaternary}{fg=white, bg=black}
+\setbeamercolor{structure}{fg=DarkBlue}
+\setbeamercolor{palette quaternary}{fg=white, bg=DarkBlue}
+\setbeamercolor{title}{bg=DarkBlue,fg=white}
+\setbeamercolor{title page}{fg=LightBlue}
+\setbeamercolor{alerted text}{fg=DarkRed}
+
+\newcommand{\citem}{\textcolor{DarkBlue}{\(\blacktriangleright\)}}
+\newcommand{\calertitem}{\textcolor{DarkRed}{\(\blacktriangleright\)}}
+
 
 %% REVISION MACROS
 
@@ -34,21 +44,75 @@
 \title{Data Skew in Map-Reduce}
 \subtitle{Cloud and Big Data - M1RI}
 \date{April 4th, 2017}
-\author{Florestan De Moor, Jérémy Thibault}
+\author{Florestan De Moor \& Jérémy Thibault}
 
 \titlegraphic{\includegraphics[scale=0.6]{ens} \hspace{2cm} \includegraphics[scale=0.15]{univ-rennes1}}
 
 %%
+\defbeamertemplate*{title page}{customized}[1][]
+{
+  \vfill  
+  
+  \usebeamerfont{title}\LARGE\usebeamercolor[fg]{subtitle}\inserttitle\par
+  \hspace*{0.05\linewidth}\usebeamerfont{subtitle}\insertsubtitle\par
+  \noindent\rule[0.5ex]{0.8\linewidth}{0.5pt}
+  
+  \vfill  
+  
+  \usebeamerfont{author}\small\insertauthor\par
+  \usebeamerfont{institute}\small\insertinstitute\par
+  \hspace*{0.05\linewidth}\usebeamerfont{date}\small\textit{\insertdate}\par
+  
+  \vfill  
+  
+  \usebeamercolor[fg]{titlegraphic}\inserttitlegraphic
+}
+
 \useoutertheme[subsection=false]{smoothbars}
-
-\setbeamertemplate{footline}{\hspace*{\fill}\insertframenumber/\inserttotalframenumber\hspace*{0.3cm}}
-\setbeamerfont{footline}{series=\bfseries,size=\fontsize{8}{12}\selectfont}
-
 \setbeamertemplate{navigation symbols}{}
+\makeatletter
+\setbeamertemplate{footline}
+{%
+  \pgfuseshading{beamer@barshade}%
+  \tiny
+  \ifbeamer@sb@subsection%
+    \vskip-7.75ex%
+  \else%
+    \vskip-7ex%
+  \fi%
+  \ifbeamer@sb@subsection%
+    \begin{beamercolorbox}[ignorebg,ht=2.125ex,dp=1.125ex,%
+      leftskip=.3cm,rightskip=.3cm plus1fil]{subsection in head/foot}
+      \usebeamerfont{subsection in head/foot}\insertsubsectionhead
+    \end{beamercolorbox}%
+  \fi%
+  \begin{beamercolorbox}[ignorebg,ht=2.25ex,dp=3.75ex]{section in head/foot}
+    \insertnavigation{0.9\paperwidth}
+    \hfill\insertframenumber/\inserttotalframenumber\hspace*{0.3cm}%
+  \end{beamercolorbox}%
+}%
+\setbeamertemplate{headline}{}
+%\setbeamertemplate{footline}{}
+\makeatother
 
 \setbeamertemplate{caption}{\raggedright\insertcaption\par}
-
 \setbeamertemplate{bibliography item}[text]
+
+\newenvironment<>{cblock}[1]{%
+      \par%
+      \usebeamercolor[fg]{structure} \textbf{#1}\par     
+      \noindent\rule[0.5ex]{0.8\linewidth}{1pt}
+      
+      \usebeamercolor[fg]{normal text}}
+    {\par}%
+    
+\newenvironment<>{calertblock}[1]{%
+      \par%
+      \usebeamercolor[fg]{alerted text} \textbf{#1}\par     
+      \noindent\rule[0.5ex]{0.8\linewidth}{1pt}
+      
+      \usebeamercolor[fg]{normal text}}
+    {\par}%
 
 \graphicspath{{img/}}
 
@@ -56,9 +120,11 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}
+\setbeamercolor{background canvas}{bg=DarkBlue}
+\begin{frame}[plain]
     \maketitle
 \end{frame}
+\setbeamercolor{background canvas}{bg=white}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -80,20 +146,20 @@
 
 %%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Skewness Definition \footnote{\url{https://en.wikipedia.org/wiki/Skewness}}}
+\begin{frame}{Skewness Definition [Wikipedia]}
 
-\textbf{Asymmetry} of a probability distribution or a dataset distribution
+\citem{} \textbf{Asymmetry} of a probability distribution or a dataset distribution
 
 \vfill
 
-\begin{exampleblock}{}
+\begin{cblock}{Skew Example}
 \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{skewness}
     \caption{Example of negative and positive skewness in a probability distribution}
     \label{img:skewness_def}
 \end{figure}
-\end{exampleblock}
+\end{cblock}
 
 \end{frame}
 
@@ -101,28 +167,28 @@
 
 \begin{frame}{Challenges \cite{Kwon11astudy} }
 
-\begin{alertblock}{Data skew consequences}
+\begin{calertblock}{Data skew consequences}
 
-$\bullet$ Highly variable task runtimes
+\calertitem{} Highly variable task runtimes
 
-$\bullet$ Computational load unbalance among map / reduce tasks
+\calertitem{} Computational load unbalance among map / reduce tasks
 
 $\quad \longrightarrow$ \emph{Map-skew} and \emph{Reduce-skew}
 
-$\bullet$ A few tasks cause the job to take much longer
-\end{alertblock}
+\calertitem{} A few tasks cause the job to take much longer
+\end{calertblock}
 
 \vfill
 
-\begin{block}{What about speculative execution?}
+\begin{cblock}{What about speculative execution?}
 
-Efficient to mitigate performance skew of physical nodes
+\citem{} Efficient to mitigate performance skew of physical nodes
 
-But here: speculative tasks runtime $\simeq$ original tasks runtime
+\citem{} But here: speculative tasks runtime $\simeq$ original tasks runtime
 
-$\longrightarrow$ Not a solution for data skew
+$\quad \longrightarrow$ Not a solution for data skew
 
-\end{block}
+\end{cblock}
 
 \end{frame}
 
@@ -132,21 +198,24 @@ $\longrightarrow$ Not a solution for data skew
 
 \begin{frame}{Map-Skew Examples \cite{Kwon11astudy}}
 
-$\bullet$ \textbf{Expensive Record}
-
+\begin{cblock}{Expensive Record}
 few words
+\end{cblock}
+
 
 \vfill
 
-$\bullet$ \textbf{Heterogeneous Maps}
-
+\begin{cblock}{Heterogeneous Maps}
 few words
+\end{cblock}
+
 
 \vfill
 
-$\bullet$ \textbf{Non-Homomorphic Map}
-
+\begin{cblock}{Non-Homomorphic Map}
 few words
+\end{cblock}
+
 
 \end{frame}
 
@@ -158,21 +227,22 @@ few words
 
 \begin{frame}{Reduce-Skew Examples \cite{Kwon11astudy}}
 
-$\bullet$ \textbf{Partitioning Skew}
-
+\begin{cblock}{Partitioning Skew}
 few words
+\end{cblock}
+
 
 \vfill
 
-$\bullet$ \textbf{Expensive Input}
-
+\begin{cblock}{Expensive Input}
 few words
+\end{cblock}
 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{How to handle data skew in Map-Reduce?}
+\section{Handling Data Skew}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
