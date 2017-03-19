@@ -201,21 +201,29 @@ $\quad \longrightarrow$ Not a solution for data skew
 \begin{frame}{Map-Skew Examples \cite{Kwon11astudy}}
 
 \begin{cblock}{Expensive Record}
-few words
+
+\citem{} Some records are more expensive than others
+
+\citem{} Example: PageRank
+
 \end{cblock}
 
 
 \vfill
 
 \begin{cblock}{Heterogeneous Maps}
-few words
+
+\citem{} Map tasks run different algorithms
+
+\citem{} Example: task doing more I/O than others
+
 \end{cblock}
 
 
 \vfill
 
 \begin{cblock}{Non-Homomorphic Map}
-few words
+\todo{}
 \end{cblock}
 
 
@@ -230,14 +238,26 @@ few words
 \begin{frame}{Reduce-Skew Examples \cite{Kwon11astudy}}
 
 \begin{cblock}{Partitioning Skew}
-few words
+
+\citem{} Data not evenly distributed between reducers, even if keys are
+
+\citem{} Data allocation may depend on values computed during map phase
+
+$\quad \longrightarrow$ Balanced data allocation is difficult
+
 \end{cblock}
 
 
 \vfill
 
 \begin{cblock}{Expensive Input}
-few words
+
+\citem{} Similar to expensive record during map phase
+
+\citem{} Some (key, value) pairs are more expensive to process
+
+\citem{} More likely to arise if reduce is a holistic operation
+
 \end{cblock}
 
 \end{frame}
