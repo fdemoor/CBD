@@ -7,6 +7,9 @@
 \usepackage{amssymb}
 \usepackage{caption}
 
+\usepackage{sansmathaccent}
+\pdfmapfile{+sansmathaccent.map}
+
 \usepackage{subfig}
 \captionsetup{labelformat=empty}
 \usepackage{xcolor}
@@ -34,8 +37,8 @@
 
 %% REVISION MACROS
 
-\newcommand{\todo}[1]{\textcolor{red}{\textbf{ToDo}\ifx&#1&\else ~[\emph{#1} ]~\fi}}
-\newcommand{\fixme}[1]{\textcolor{purple}{\textbf{FixMe}\ifx&#1&\else ~[ \emph{#1} ]~\fi}}
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{ToDo}\ifx&#1&\else~[\emph{#1} ]~\fi}}
+\newcommand{\fixme}[1]{\textcolor{purple}{\textbf{FixMe}\ifx&#1&\else~[ \emph{#1} ]~\fi}}
 
 
 %% Tikz for picture drawing %%
@@ -44,7 +47,7 @@
 
 %%
 \title{Data Skew in Map-Reduce}
-\subtitle{Cloud and Big Data - M1RI}
+\subtitle{Cloud and Big Data --- M1RI}
 \date{April 4th, 2017}
 \author{Florestan De Moor \& Jérémy Thibault}
 
@@ -53,21 +56,21 @@
 %%
 \defbeamertemplate*{title page}{customized}[1][]
 {
-  \vfill  
-  
+  \vfill
+
   \usebeamerfont{title}\LARGE\usebeamercolor[fg]{subtitle}\inserttitle\par
   \hspace*{0.05\linewidth}\usebeamerfont{subtitle}\insertsubtitle\par
   \noindent\rule[0.5ex]{0.8\linewidth}{0.5pt}
-  
-  \vfill  
-  
+
+  \vfill
+
   \usebeamerfont{author}\small\insertauthor\par
   \usebeamerfont{institute}\small\insertinstitute\par
   \hspace*{0.05\linewidth}\usebeamerfont{date}\small\textit{\insertdate}\par
-  
-  \vfill  
-  
-  \usebeamercolor[fg]{titlegraphic}\inserttitlegraphic
+
+  \vfill
+
+  \usebeamercolor[fg]{titlegraphic}\inserttitlegraphic%
 }
 
 \useoutertheme[subsection=false]{smoothbars}
@@ -78,14 +81,14 @@
   \pgfuseshading{beamer@barshade}%
   \tiny
   \ifbeamer@sb@subsection%
-    \vskip-7.75ex%
+    \vskip-7.75ex%chktex 41
   \else%
-    \vskip-7ex%
+    \vskip-7ex%chktex 41
   \fi%
   \ifbeamer@sb@subsection%
     \begin{beamercolorbox}[ignorebg,ht=2.125ex,dp=1.125ex,%
       leftskip=.3cm,rightskip=.3cm plus1fil]{subsection in head/foot}
-      \usebeamerfont{subsection in head/foot}\insertsubsectionhead
+      \usebeamerfont{subsection in head/foot}\insertsubsectionhead%
     \end{beamercolorbox}%
   \fi%
   \begin{beamercolorbox}[ignorebg,ht=2.25ex,dp=3.75ex]{section in head/foot}
@@ -102,17 +105,17 @@
 
 \newenvironment<>{cblock}[1]{%
       \par%
-      \usebeamercolor[fg]{structure} \textbf{#1}\par     
+      \usebeamercolor[fg]{structure} \textbf{#1}\par
       \noindent\rule[0.5ex]{0.8\linewidth}{1pt}
-      
+
       \usebeamercolor[fg]{normal text}}
     {\par}%
-    
+
 \newenvironment<>{calertblock}[1]{%
       \par%
-      \usebeamercolor[fg]{alerted text} \textbf{#1}\par     
+      \usebeamercolor[fg]{alerted text} \textbf{#1}\par
       \noindent\rule[0.5ex]{0.8\linewidth}{1pt}
-      
+
       \usebeamercolor[fg]{normal text}}
     {\par}%
 
@@ -158,8 +161,7 @@
 \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{skewness}
-    \caption{Example of negative and positive skewness in a probability distribution}
-    \label{img:skewness_def}
+    \caption{Example of negative and positive skewness in a probability distribution}\label{img:skewness_def}
 \end{figure}
 \end{cblock}
 
@@ -167,7 +169,7 @@
 
 %%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Challenges \cite{Kwon11astudy} }
+\begin{frame}{Challenges~\cite{Kwon11astudy} }
 
 \begin{calertblock}{Data skew consequences}
 
@@ -198,7 +200,7 @@ $\quad \longrightarrow$ Not a solution for data skew
 
 \subsection{Map-Skew Examples}
 
-\begin{frame}{Map-Skew Examples \cite{Kwon11astudy}}
+\begin{frame}{Map-Skew Examples~\cite{Kwon11astudy}}
 
 \begin{cblock}{Expensive Record}
 
@@ -235,7 +237,7 @@ $\quad \longrightarrow$ Not a solution for data skew
 
 %%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Reduce-Skew Examples \cite{Kwon11astudy}}
+\begin{frame}{Reduce-Skew Examples~\cite{Kwon11astudy}}
 
 \begin{cblock}{Partitioning Skew}
 
@@ -266,15 +268,40 @@ $\quad \longrightarrow$ Balanced data allocation is difficult
 
 \section{Handling Data Skew}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \subsection{Overview of some existing algorithms}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{LEEN~\cite{ibrahim:hal-00822973}}
+  \begin{cblock}{Solving Partitioning Skew}
+
+  \citem{} LEEN algorithm for locality-aware and fairness-
+aware key partitioning in MapReduce
+  \end{cblock}
+\end{frame}
+
+\begin{frame}{Skewtune~\cite{Kwon:2012:SMS:2213836.2213840}}
+  \begin{cblock}{Skewtune caracteristics}
+    \citem{} A solution to the data skew problem from uneven distributions
+
+    \citem{} Does not require rewriting existing map-reduce applications
+
+    \citem{} Does not rely on synchronization barriers
+  \end{cblock}
+  \vfill
+  \begin{cblock}{Principle}
+    \citem{} Late skew detection: when a slot is available
+
+    \citem{} Detects one straggler, i.e.\ a task such that $\frac{t}{2} > \omega$
+
+    \citem{} Reassign the second part of this task to the available slot
+  \end{cblock}
+\end{frame}
+
+
+
 
 \subsection{Focus on an algorithm (Skewtune?)}
 
-%%%%%%%%%%%%%%%%%%%%
+
 
 \begin{frame}
 \end{frame}
@@ -285,17 +312,17 @@ $\quad \longrightarrow$ Balanced data allocation is difficult
 
 %%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}
-    \cite{Kwon11astudy}
-    \cite{Kwon:2012:SMS:2213836.2213840}
-    \cite{gufler2011handling}
-    \cite{ibrahim:hal-00822973}
-\end{frame}
+% \begin{frame}
+%     \cite{Kwon11astudy}
+%     \cite{Kwon:2012:SMS:2213836.2213840}
+%     \cite{gufler2011handling}
+%     \cite{ibrahim:hal-00822973}
+% \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}[allowframebreaks]{References}
-    \printbibliography
+    \printbibliography%
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
