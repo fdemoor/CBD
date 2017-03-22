@@ -292,12 +292,19 @@ aware key partitioning in MapReduce
 
     \citem{} Detects one straggler, i.e.\ a task such that $\frac{t}{2} > \omega$
 
-    \citem{} Reassign the second part of this task to the available slot
+    \citem{} Repartitions the rest of the task on the two slots
   \end{cblock}
 \end{frame}
 
+\begin{frame}{Skewtune~\cite{Kwon:2012:SMS:2213836.2213840}}
+  \begin{cblock}{Repartionionning}
+    \citem{} Use srange partionning
 
+    \citem{} Saves a straggler's output
 
+    \citem{} Repartitions only the unprocessed data
+  \end{cblock}
+\end{frame}
 
 \subsection{Focus on an algorithm (Skewtune?)}
 
