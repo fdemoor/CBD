@@ -23,7 +23,7 @@ Question 2.1 :
  
 Question 1.2 :
 	[pas bon] 751_0001 Sort 5Go 60sec kill reduce
-        755 0001 and 801 0001 Sort 5Go 60sec kill map (801 should be better I think)
+        [ok] 755 0001 and 801 0001 Sort 5Go 60sec kill map (801 should be better I think)
 	[ok] 711 0002, 735 0001, 741 0001, 746 0001 Sort 5go 30sec kill map and reduce, try to guess ... x) (should be similar to previous)
 
 Question 1.1 :
