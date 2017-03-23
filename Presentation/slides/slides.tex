@@ -1,5 +1,7 @@
 \documentclass[11pt]{beamer}
+
 \usetheme{Luebeck}
+
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{amsmath}
@@ -90,7 +92,7 @@
   \fi%
   \begin{beamercolorbox}[ignorebg,ht=2.25ex,dp=3.75ex]{section in head/foot}
     \insertnavigation{0.9\paperwidth}
-    \hfill\insertframenumber/\inserttotalframenumber\hspace*{0.3cm}%
+    \hfill\insertframenumber\hspace*{0.3cm}%
   \end{beamercolorbox}%
 }%
 \setbeamertemplate{headline}{}
@@ -123,7 +125,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \setbeamercolor{background canvas}{bg=DarkBlue}
-\begin{frame}[plain]
+\begin{frame}[plain,noframenumbering]
     \maketitle
 \end{frame}
 \setbeamercolor{background canvas}{bg=LightGray}
@@ -134,6 +136,12 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\begin{frame}
+    \todo{ ... }
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+
 \begin{frame}{Outline}
     \tableofcontents
 \end{frame}
@@ -141,6 +149,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Data Skew Challenges}
+
+\begin{frame}{Outline}
+    \tableofcontents[currentsection]
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -152,7 +164,7 @@
 
 \citem{} \textbf{Asymmetry} of a probability distribution or a dataset distribution
 
-\vfill
+\vfill \pause
 
 \begin{cblock}{Skew Example}
 \begin{figure}
@@ -180,7 +192,7 @@ $\quad \longrightarrow$ \emph{Map-skew} and \emph{Reduce-skew}
 \calertitem{} A few tasks cause the job to take much longer
 \end{calertblock}
 
-\vfill
+\vfill \pause
 
 \begin{cblock}{What about speculative execution?}
 
@@ -209,7 +221,7 @@ $\quad \longrightarrow$ Not a solution for data skew
 \end{cblock}
 
 
-\vfill
+\vfill \pause
 
 \begin{cblock}{Heterogeneous Maps}
 
@@ -220,7 +232,7 @@ $\quad \longrightarrow$ Not a solution for data skew
 \end{cblock}
 
 
-\vfill
+\vfill \pause
 
 \begin{cblock}{Non-Homomorphic Map}
 \todo{}
@@ -248,7 +260,7 @@ $\quad \longrightarrow$ Balanced data allocation is difficult
 \end{cblock}
 
 
-\vfill
+\vfill \pause
 
 \begin{cblock}{Expensive Input}
 
@@ -265,6 +277,10 @@ $\quad \longrightarrow$ Balanced data allocation is difficult
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Handling Data Skew}
+
+\begin{frame}{Outline}
+    \tableofcontents[currentsection]
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
