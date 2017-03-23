@@ -85,6 +85,7 @@ To address this issue, a popular approach is speculative tasks.
 Tasks which are still running on some nodes are launched again on nodes that have already finished their tasks, thinking that it may be faster.
 
 In this question, we aim to observe this experimentally.
+We used 5 nodes in \texttt{paravance} cluster.
 We generated with \texttt{randomwriter} a dataset of 20 Go.
 We run sort benchmark, with and without speculation.
 We then re-do the same, but we also stress all the CPUs of one node during the executions.
@@ -102,6 +103,7 @@ When it realize a node is dead, the JobTracker has to resubmit the dead node tas
 and also rerun some previous completed tasks.
 
 In this question, we try to observe this experimentally.
+We used 5 nodes in \texttt{parapluie} cluster.
 We generated with \texttt{randomwriter} a dataset of 5 Go.
 We run executions with two different expiry times : 30 seconds and 60 seconds.
 During an execution, we kill the TaskTracker daemon on one node, with two different scenarios:
@@ -125,6 +127,7 @@ This optimization is application dependent.
 Starting reduce tasks earlier spreads out the data transfer over time, which is good if performances are limited by the network.
 But on the other hand, reduce tasks occupy slots that may have been used by other tasks.
 
+We used 5 nodes in \texttt{parapluie} cluster.
 In this question, we generated with \texttt{randomwriter} a dataset of 5 Go, and with \texttt{randomtextwriter} a dataset of 1 Go.
 We denote the reduce start paramater by $p$.
 This mean that reduce tasks start when fraction $p$ of map tasks are completed.
