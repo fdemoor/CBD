@@ -1,5 +1,4 @@
 \documentclass[a4paper]{article}
-
 \usepackage[francais]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -62,12 +61,6 @@
 
 \maketitle
 
-\section*{Introduction}
-
-\section{Mitigating stragglers/failures in Hadoop}
-
-\paragraph{Question 1.1}
-
 Log 1 et 2 : sans stress, spec off
 Log 3 : avec stress, spec off
 Log 4 : avec stress, spec off
@@ -75,13 +68,70 @@ Log 5 : avec stress, spec on
 Log 6 et 7 : sans stress, spec on
 
 
+
+
+
+
+
+\section*{Introduction}
+
+\section{Mitigating stragglers/failures in Hadoop}
+
+\paragraph{Question 1.1}
+
+Hadoop system divides the tasks across many nodes, which can have different performances, due for example to hardware reasons.
+Thus, one node can slow down the whole system.
+To address this issue, a popular approach is speculative tasks.
+Tasks which are still running on some nodes are launched again on nodes that have already finished their tasks, thinking that it may be faster.
+
+In this question, we aim to observe this experimentally.
+We generated with \texttt{randomwriter} a dataset of 20 Go.
+We run sort benchmark, with and without speculation.
+We then re-do the same, but we also stress all the CPUs of one node during the executions.
+
+\todo{ figure + explain results }
+
+
 \paragraph{Question 1.2}
+
+During an execution, a node failure may happen.
+The JobTracker receives regular heartbeat signal from the TaskTracker nodes.
+If it receives no heartbeat from a node, it waits for a given amount of time before considering it as dead.
+This is the expiry time.
+When it realize a node is dead, the JobTracker has to resubmit the dead node tasks to other nodes,
+and also rerun some previous completed tasks.
+
+In this question, we try to observe this experimentally.
+We generated with \texttt{randomwriter} a dataset of 5 Go.
+We run executions with two different expiry times : 30 seconds and 60 seconds.
+During an execution, we kill the TaskTracker daemon on one node, with two different scenarios:
+\begin{itemize}
+    \item Before the completion of map tasks
+    \item After the completion of map tasks
+\end{itemize}
+
+\todo{ figure + explain results }
+
 
 
 \section{Application specific optimization in Hadoop}
 
-\paragraph{Question 2.1}
+\paragraph{Question 2.1}lb
 
+During an execution, it is possible to choose when to start the reduce tasks compared to the completed map tasks.
+At first, it may seem better to wait for all map tasks to end before running reduce tasks,
+but in some situations starting reduce tasks earlier may lead to better performances.
+This optimization is application dependent.
+Starting reduce tasks earlier spreads out the data transfer over time, which is good if performances are limited by the network.
+But on the other hand, reduce tasks occupy slots that may have been used by other tasks.
+
+In this question, we generated with \texttt{randomwriter} a dataset of 5 Go, and with \texttt{randomtextwriter} a dataset of 1 Go.
+We denote the reduce start paramater by $p$.
+This mean that reduce tasks start when fraction $p$ of map tasks are completed.
+We set $p \in \lbrace 0.05, 0.5, 1 \rbrace$.
+We run sort benchmark on the 5 Go dataset, and the word count benchmark on the 1 Go dataset.
+
+\todo{ figure + explain results }
 
 \section{Scheduling in Hadoop}
 

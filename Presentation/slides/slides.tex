@@ -1,11 +1,16 @@
 \documentclass[11pt]{beamer}
+
 \usetheme{Luebeck}
+
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{caption}
+
+\usepackage{sansmathaccent}
+\pdfmapfile{+sansmathaccent.map}
 
 \usepackage{subfig}
 \captionsetup{labelformat=empty}
@@ -16,14 +21,26 @@
 
 %% Defining new colors %%
 \definecolor{Orange}{RGB}{255,140,30}
-\setbeamercolor{normal text}{fg=black,bg=white}
-\setbeamercolor{structure}{fg=Orange}
-\setbeamercolor{palette quaternary}{fg=white, bg=black}
+\definecolor{DarkBlue}{RGB}{35,10,73}
+\definecolor{LightBlue}{RGB}{204,204,255}
+\definecolor{DarkRed}{RGB}{135,13,13}
+\definecolor{LightGray}{RGB}{210,210,224}
+
+\setbeamercolor{normal text}{fg=black,bg=LightGray}
+\setbeamercolor{structure}{fg=DarkBlue}
+\setbeamercolor{palette quaternary}{fg=white, bg=DarkBlue}
+\setbeamercolor{title}{bg=DarkBlue,fg=white}
+\setbeamercolor{title page}{fg=LightBlue}
+\setbeamercolor{alerted text}{fg=DarkRed}
+
+\newcommand{\citem}{\textcolor{DarkBlue}{\(\blacktriangleright\)}}
+\newcommand{\calertitem}{\textcolor{DarkRed}{\(\blacktriangleright\)}}
+
 
 %% REVISION MACROS
 
-\newcommand{\todo}[1]{\textcolor{red}{\textbf{ToDo}\ifx&#1&\else ~[\emph{#1} ]~\fi}}
-\newcommand{\fixme}[1]{\textcolor{purple}{\textbf{FixMe}\ifx&#1&\else ~[ \emph{#1} ]~\fi}}
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{ToDo}\ifx&#1&\else~[\emph{#1} ]~\fi}}
+\newcommand{\fixme}[1]{\textcolor{purple}{\textbf{FixMe}\ifx&#1&\else~[ \emph{#1} ]~\fi}}
 
 
 %% Tikz for picture drawing %%
@@ -32,23 +49,77 @@
 
 %%
 \title{Data Skew in Map-Reduce}
-\subtitle{Cloud and Big Data - M1RI}
+\subtitle{Cloud and Big Data --- M1RI}
 \date{April 4th, 2017}
-\author{Florestan De Moor, Jérémy Thibault}
+\author{Florestan De Moor \& Jérémy Thibault}
 
 \titlegraphic{\includegraphics[scale=0.6]{ens} \hspace{2cm} \includegraphics[scale=0.15]{univ-rennes1}}
 
 %%
+\defbeamertemplate*{title page}{customized}[1][]
+{
+  \vfill
+
+  \usebeamerfont{title}\LARGE\usebeamercolor[fg]{subtitle}\inserttitle\par
+  \hspace*{0.05\linewidth}\usebeamerfont{subtitle}\insertsubtitle\par
+  \noindent\rule[0.5ex]{0.8\linewidth}{0.5pt}
+
+  \vfill
+
+  \usebeamerfont{author}\small\insertauthor\par
+  \usebeamerfont{institute}\small\insertinstitute\par
+  \hspace*{0.05\linewidth}\usebeamerfont{date}\small\textit{\insertdate}\par
+
+  \vfill
+
+  \usebeamercolor[fg]{titlegraphic}\inserttitlegraphic%
+}
+
 \useoutertheme[subsection=false]{smoothbars}
-
-\setbeamertemplate{footline}{\hspace*{\fill}\insertframenumber/\inserttotalframenumber\hspace*{0.3cm}}
-\setbeamerfont{footline}{series=\bfseries,size=\fontsize{8}{12}\selectfont}
-
 \setbeamertemplate{navigation symbols}{}
+\makeatletter
+\setbeamertemplate{footline}
+{%
+  \pgfuseshading{beamer@barshade}%
+  \tiny
+  \ifbeamer@sb@subsection%
+    \vskip-7.75ex%chktex 41
+  \else%
+    \vskip-7ex%chktex 41
+  \fi%
+  \ifbeamer@sb@subsection%
+    \begin{beamercolorbox}[ignorebg,ht=2.125ex,dp=1.125ex,%
+      leftskip=.3cm,rightskip=.3cm plus1fil]{subsection in head/foot}
+      \usebeamerfont{subsection in head/foot}\insertsubsectionhead%
+    \end{beamercolorbox}%
+  \fi%
+  \begin{beamercolorbox}[ignorebg,ht=2.25ex,dp=3.75ex]{section in head/foot}
+    \insertnavigation{0.9\paperwidth}
+    \hfill\insertframenumber\hspace*{0.3cm}%
+  \end{beamercolorbox}%
+}%
+\setbeamertemplate{headline}{}
+%\setbeamertemplate{footline}{}
+\makeatother
 
 \setbeamertemplate{caption}{\raggedright\insertcaption\par}
-
 \setbeamertemplate{bibliography item}[text]
+
+\newenvironment<>{cblock}[1]{%
+      \par%
+      \usebeamercolor[fg]{structure} \textbf{#1}\par
+      \noindent\rule[0.5ex]{0.8\linewidth}{1pt}
+
+      \usebeamercolor[fg]{normal text}}
+    {\par}%
+
+\newenvironment<>{calertblock}[1]{%
+      \par%
+      \usebeamercolor[fg]{alerted text} \textbf{#1}\par
+      \noindent\rule[0.5ex]{0.8\linewidth}{1pt}
+
+      \usebeamercolor[fg]{normal text}}
+    {\par}%
 
 \graphicspath{{img/}}
 
@@ -56,15 +127,23 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}
+\setbeamercolor{background canvas}{bg=DarkBlue}
+\begin{frame}[plain,noframenumbering]
     \maketitle
 \end{frame}
+\setbeamercolor{background canvas}{bg=LightGray}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Introduction}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+    \todo{ ... }
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}{Outline}
     \tableofcontents
@@ -74,55 +153,58 @@
 
 \section{Data Skew Challenges}
 
+\begin{frame}{Outline}
+    \tableofcontents[currentsection]
+\end{frame}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Definition and Challenges}
 
 %%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Skewness Definition \footnote{\url{https://en.wikipedia.org/wiki/Skewness}}}
+\begin{frame}{Skewness Definition [Wikipedia]}
 
-\textbf{Asymmetry} of a probability distribution or a dataset distribution
+\citem{} \textbf{Asymmetry} of a probability distribution or a dataset distribution
 
-\vfill
+\vfill \pause
 
-\begin{exampleblock}{}
+\begin{cblock}{Skew Example}
 \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{skewness}
-    \caption{Example of negative and positive skewness in a probability distribution}
-    \label{img:skewness_def}
+    \caption{Example of negative and positive skewness in a probability distribution}\label{img:skewness_def}
 \end{figure}
-\end{exampleblock}
+\end{cblock}
 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Challenges \cite{Kwon11astudy} }
+\begin{frame}{Challenges~\cite{Kwon11astudy} }
 
-\begin{alertblock}{Data skew consequences}
+\begin{calertblock}{Data skew consequences}
 
-$\bullet$ Highly variable task runtimes
+\calertitem{} Highly variable task runtimes
 
-$\bullet$ Computational load unbalance among map / reduce tasks
+\calertitem{} Computational load unbalance among map / reduce tasks
 
 $\quad \longrightarrow$ \emph{Map-skew} and \emph{Reduce-skew}
 
-$\bullet$ A few tasks cause the job to take much longer
-\end{alertblock}
+\calertitem{} A few tasks cause the job to take much longer
+\end{calertblock}
 
-\vfill
+\vfill \pause
 
-\begin{block}{What about speculative execution?}
+\begin{cblock}{What about speculative execution?}
 
-Efficient to mitigate performance skew of physical nodes
+\citem{} Efficient to mitigate performance skew of physical nodes
 
-But here: speculative tasks runtime $\simeq$ original tasks runtime
+\citem{} But here: speculative tasks runtime $\simeq$ original tasks runtime
 
-$\longrightarrow$ Not a solution for data skew
+$\quad \longrightarrow$ Not a solution for data skew
 
-\end{block}
+\end{cblock}
 
 \end{frame}
 
@@ -130,23 +212,34 @@ $\longrightarrow$ Not a solution for data skew
 
 \subsection{Map-Skew Examples}
 
-\begin{frame}{Map-Skew Examples \cite{Kwon11astudy}}
+\begin{frame}{Map-Skew Examples~\cite{Kwon11astudy}}
 
-$\bullet$ \textbf{Expensive Record}
+\begin{cblock}{Expensive Record}
 
-few words
+\citem{} Some records are more expensive than others
 
-\vfill
+\citem{} Example: PageRank
 
-$\bullet$ \textbf{Heterogeneous Maps}
+\end{cblock}
 
-few words
 
-\vfill
+\vfill \pause
 
-$\bullet$ \textbf{Non-Homomorphic Map}
+\begin{cblock}{Heterogeneous Maps}
 
-few words
+\citem{} Map tasks run different algorithms
+
+\citem{} Example: task doing more I/O than others
+
+\end{cblock}
+
+
+\vfill \pause
+
+\begin{cblock}{Non-Homomorphic Map}
+\todo{}
+\end{cblock}
+
 
 \end{frame}
 
@@ -156,33 +249,84 @@ few words
 
 %%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Reduce-Skew Examples \cite{Kwon11astudy}}
+\begin{frame}{Reduce-Skew Examples~\cite{Kwon11astudy}}
 
-$\bullet$ \textbf{Partitioning Skew}
+\begin{cblock}{Partitioning Skew}
 
-few words
+\citem{} Data not evenly distributed between reducers, even if keys are
 
-\vfill
+\citem{} Data allocation may depend on values computed during map phase
 
-$\bullet$ \textbf{Expensive Input}
+$\quad \longrightarrow$ Balanced data allocation is difficult
 
-few words
+\end{cblock}
+
+
+\vfill \pause
+
+\begin{cblock}{Expensive Input}
+
+\citem{} Similar to expensive record during map phase
+
+\citem{} Some (key, value) pairs are more expensive to process
+
+\citem{} More likely to arise if reduce is a holistic operation
+
+\end{cblock}
 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{How to handle data skew in Map-Reduce?}
+\section{Handling Data Skew}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsection{Overview of some existing algorithms}
+\begin{frame}{Outline}
+    \tableofcontents[currentsection]
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\subsection{Overview of some existing algorithms}
+
+\begin{frame}{LEEN~\cite{ibrahim:hal-00822973}}
+  \begin{cblock}{Solving Partitioning Skew}
+
+  \citem{} LEEN algorithm for locality-aware and fairness-
+aware key partitioning in MapReduce
+  \end{cblock}
+\end{frame}
+
+\begin{frame}{Skewtune~\cite{Kwon:2012:SMS:2213836.2213840}}
+  \begin{cblock}{Skewtune caracteristics}
+    \citem{} A solution to the data skew problem from uneven distributions
+
+    \citem{} Does not require rewriting existing map-reduce applications
+
+    \citem{} Does not rely on synchronization barriers
+  \end{cblock}
+  \vfill
+  \begin{cblock}{Principle}
+    \citem{} Late skew detection: when a slot is available
+
+    \citem{} Detects one straggler, i.e.\ a task such that $\frac{t}{2} > \omega$
+
+    \citem{} Repartitions the rest of the task on the two slots
+  \end{cblock}
+\end{frame}
+
+\begin{frame}{Skewtune~\cite{Kwon:2012:SMS:2213836.2213840}}
+  \begin{cblock}{Repartionionning}
+    \citem{} Use srange partionning
+
+    \citem{} Saves a straggler's output
+
+    \citem{} Repartitions only the unprocessed data
+  \end{cblock}
+\end{frame}
+
 \subsection{Focus on an algorithm (Skewtune?)}
 
-%%%%%%%%%%%%%%%%%%%%
+
 
 \begin{frame}
 \end{frame}
@@ -193,17 +337,17 @@ few words
 
 %%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}
-    \cite{Kwon11astudy}
-    \cite{Kwon:2012:SMS:2213836.2213840}
-    \cite{gufler2011handling}
-    \cite{ibrahim:hal-00822973}
-\end{frame}
+% \begin{frame}
+%     \cite{Kwon11astudy}
+%     \cite{Kwon:2012:SMS:2213836.2213840}
+%     \cite{gufler2011handling}
+%     \cite{ibrahim:hal-00822973}
+% \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}[allowframebreaks]{References}
-    \printbibliography
+    \printbibliography%
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
