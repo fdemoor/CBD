@@ -1,1 +1,92 @@
+\documentclass[a4paper]{article}
 
+\usepackage[francais]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{xspace}
+\usepackage{authblk}
+
+\usepackage{xcolor}
+
+\usepackage{hyperref}
+
+\usepackage{listings}
+
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{ToDo} [ \emph{#1} ]}}
+\newcommand{\fixme}[1]{\textcolor{purple}{\textbf{FixMe} [ \emph{#1} ]}}
+\newcommand{\note}[1]{\textcolor{blue}{\textbf{Note} [ \emph{#1} ]}}
+
+\lstdefinestyle{log}{
+  emptylines=1,
+  breaklines=true,
+  moredelim=**[is][\color{blue}]{@}{.},
+  moredelim=**[is][\color{purple}]{!}{.},
+  moredelim=**[is][\color{red}]{?}{.},
+  moredelim=**[is][\color{orange}]{£}{.},
+  xleftmargin=\parindent,
+  basicstyle=\scriptsize\sffamily
+}
+
+
+\definecolor{silver}{rgb}{0.7,0.7,0.7}
+\definecolor{green}{rgb}{0,0.6,0}
+
+\lstdefinestyle{C}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  xleftmargin=\parindent,
+  language=C,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green},
+  commentstyle=\itshape\color{silver},
+  identifierstyle=\color{black},
+  stringstyle=\color{red},
+  frame=l,
+  numbers=left
+}
+
+
+
+
+
+\begin{document}
+
+\title{CBD - Practical evaluation}
+\author{Florestan de Moor}
+\author{Rémi Hutin}
+\affil{ENS Rennes, Université de Rennes 1}
+\date{24 Mars 2017}
+
+\maketitle
+
+\section*{Introduction}
+
+\section{Mitigating stragglers/failures in Hadoop}
+
+\paragraph{Question 1.1}
+
+Log 1 et 2 : sans stress, spec off
+Log 3 : avec stress, spec off
+Log 4 : avec stress, spec off
+Log 5 : avec stress, spec on
+Log 6 et 7 : sans stress, spec on
+
+
+\paragraph{Question 1.2}
+
+
+\section{Application specific optimization in Hadoop}
+
+\paragraph{Question 2.1}
+
+
+\section{Scheduling in Hadoop}
+
+\paragraph{Question 3.1}
+
+
+\end{document}
+\grid
