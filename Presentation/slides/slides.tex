@@ -140,7 +140,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}
-    \todo{ ... }
+    \todo{ \ldots }
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
@@ -167,7 +167,7 @@
 
 \citem{} \textbf{Asymmetry} of a probability distribution or a dataset distribution
 
-\vfill \pause
+\vfill \pause%
 
 \begin{cblock}{Skew Example}
 \begin{figure}
@@ -194,7 +194,7 @@ $\quad \longrightarrow$ \emph{Map-skew} and \emph{Reduce-skew}
 \calertitem{} A few tasks cause the job to take much longer
 \end{calertblock}
 
-\vfill \pause
+\vfill \pause%
 
 \begin{cblock}{What about speculative execution?}
 
@@ -223,7 +223,7 @@ $\quad \longrightarrow$ Not a solution for data skew
 \end{cblock}
 
 
-\vfill \pause
+\vfill \pause%
 
 \begin{cblock}{Heterogeneous Maps}
 
@@ -234,10 +234,12 @@ $\quad \longrightarrow$ Not a solution for data skew
 \end{cblock}
 
 
-\vfill \pause
+\vfill \pause%
 
 \begin{cblock}{Non-Homomorphic Map}
-\todo{Florestan: I don't know what to say here}
+\citem{} Map tasks can take many records as input instead of only one
+
+\citem{} Example: the data may already be partitionned by another map-reduce job
 \end{cblock}
 
 
@@ -262,7 +264,7 @@ $\quad \longrightarrow$ Balanced data allocation is difficult
 \end{cblock}
 
 
-\vfill \pause
+\vfill \pause%
 
 \begin{cblock}{Expensive Input}
 
@@ -288,48 +290,48 @@ $\quad \longrightarrow$ Balanced data allocation is difficult
 
 \begin{frame}{Some existing algorithms}
 
-\begin{cblock}{LEEN \cite{ibrahim:hal-00822973}}
+\begin{cblock}{LEEN~\cite{ibrahim:hal-00822973}}
     \citem{} Addresses partitioning skew
-    
+
     \citem{} Higher locality and fair distribution of reduce inputs
-    
+
     \citem{} Up to 45\% of improvement on some workloads
-    
+
 \end{cblock}
 
-\vfill \pause
+\vfill \pause%
 
-\begin{cblock}{Load Balancing \cite{gufler2011handling}}
+\begin{cblock}{Load Balancing~\cite{gufler2011handling}}
 
     \citem{} Addresses partitioning skew
-    
+
     \citem{} Proposes cost model to estimate amount of work
-    
+
     \citem{} Proposes two load balancing algorithms: Fine Partitioning and Dynamic Fragmentation
-    
+
 \end{cblock}
 
 \end{frame}
 
 \begin{frame}{Some existing algorithms}
 
-\begin{cblock}{SkewTune \cite{Kwon:2012:SMS:2213836.2213840}}
+\begin{cblock}{SkewTune~\cite{Kwon:2012:SMS:2213836.2213840}}
 
     \citem{} Addresses expensive record, heterogeneous maps, partitioning skew and expensive input
-    
+
     \citem{} Proactive repartition to fully utilize nodes
-    
+
     \citem{} Up to 4x improvement
-    
+
 \end{cblock}
 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{LEEN: Locality-awarE and fairness-awarE key partitioNing}
+\subsection{LEEN:\@Locality-awarE and fairness-awarE key partitioNing}
 
-\begin{frame}{LEEN \cite{ibrahim:hal-00822973}}
+\begin{frame}{LEEN~\cite{ibrahim:hal-00822973}}
   \begin{cblock}{Solving Partitioning Skew}
 
   \citem{} LEEN algorithm for locality-aware and fairness-
@@ -341,7 +343,7 @@ aware key partitioning in MapReduce
 
 \subsection{Fine Partitioning and Dynamic Fragmentation}
 
-\begin{frame}{Load Balancing \cite{gufler2011handling}}
+\begin{frame}{Load Balancing~\cite{gufler2011handling}}
 \todo{ Florestan: I'll do it another day}
 \end{frame}
 
@@ -349,7 +351,7 @@ aware key partitioning in MapReduce
 
 \subsection{Skewtune}
 
-\begin{frame}{SkewTune \cite{Kwon:2012:SMS:2213836.2213840}}
+\begin{frame}{SkewTune~\cite{Kwon:2012:SMS:2213836.2213840}}
   \begin{cblock}{SkewTune caracteristics}
     \citem{} A solution to the data skew problem from uneven distributions
 
@@ -367,9 +369,9 @@ aware key partitioning in MapReduce
   \end{cblock}
 \end{frame}
 
-\begin{frame}{SkewTune \cite{Kwon:2012:SMS:2213836.2213840}}
+\begin{frame}{SkewTune~\cite{Kwon:2012:SMS:2213836.2213840}}
   \begin{cblock}{Repartionionning}
-    \citem{} Use srange partionning
+    \citem{} Uses range partionning
 
     \citem{} Saves a straggler's output
 
