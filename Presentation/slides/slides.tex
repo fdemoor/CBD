@@ -342,7 +342,28 @@ aware key partitioning in MapReduce
 \subsection{Fine Partitioning and Dynamic Fragmentation}
 
 \begin{frame}{Load Balancing \cite{gufler2011handling}}
-\todo{ Florestan: I'll do it another day}
+
+\begin{cblock}{Cost model}
+    \citem{} Maximize resource usage: no idle reducer
+    
+    \citem{} Estimate amount of work for each cluster of key $k$: $\omega(k)$
+    
+    Depends on the number of tuples in the cluster and its byte size
+    
+    \citem{} Associated bin packing problem is NP hard
+    
+    \citem{} Monitoring clusters too expensive
+    
+    $\longrightarrow$ Monitor partitions and compute average values for clusters
+\end{cblock}
+
+\vfill
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{costModel}
+\end{figure}
+
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
