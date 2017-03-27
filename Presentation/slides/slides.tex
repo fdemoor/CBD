@@ -343,6 +343,10 @@ $\quad \longrightarrow$ Balanced data allocation is difficult
 
 \subsection{LEEN:\@Locality-awarE and fairness-awarE key partitioNing}
 
+\begin{frame}{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+\end{frame}
+
 \begin{frame}{LEEN~\cite{ibrahim:hal-00822973}}
   \begin{cblock}{Solving Partitioning Skew}
 
@@ -355,13 +359,77 @@ aware key partitioning in MapReduce
 
 \subsection{Fine Partitioning and Dynamic Fragmentation}
 
-\begin{frame}{Load Balancing~\cite{gufler2011handling}}
-\todo{ Florestan: I'll do it another day}
+\begin{frame}{Outline}
+    \tableofcontents[currentsection,currentsubsection]
 \end{frame}
+
+\begin{frame}{Load Balancing~\cite{gufler2011handling}}
+
+\begin{cblock}{Cost model}
+    \citem{} Maximize resource usage: no idle reducer
+
+    \citem{} Estimate amount of work for each cluster of key $k$: $\omega(k)$
+
+    Depends on the number of tuples in the cluster and its byte size
+
+    \citem{} Associated bin packing problem is NP hard
+
+    \citem{} Monitoring clusters too expensive
+
+    $\longrightarrow$ Monitor partitions and compute average values for clusters
+\end{cblock}
+
+\vfill
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{costModel}
+    \caption{Partitioning skew example}\label{img:costModel}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}{Load Balancing~\cite{gufler2011handling}}
+
+\begin{cblock}{Fine Partitioning}
+    \citem{}
+\end{cblock}
+
+\vfill
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{fineP}
+    \caption{Fine partitioning}\label{img:fineP}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}{Load Balancing~\cite{gufler2011handling}}
+
+\begin{cblock}{Dynamic Fragmentation}
+    \citem{}
+\end{cblock}
+
+\vfill
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{dynF}
+    \caption{Dynamic fragmentation}\label{img:dynF}
+\end{figure}
+
+\end{frame}
+
+
 
 %%%%%%%%%%%%%%%%%%%%
 
 \subsection{Skewtune}
+
+\begin{frame}{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+\end{frame}
 
 \begin{frame}{SkewTune~\cite{Kwon:2012:SMS:2213836.2213840}}
   \begin{cblock}{SkewTune caracteristics}
@@ -394,6 +462,10 @@ aware key partitioning in MapReduce
 %%%%%%%%%%%%%%%%%%%%
 
 \subsection{Overview of other approaches}
+
+\begin{frame}{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+\end{frame}
 
 \begin{frame}{Overview of other approaches}
 \todo{ brief overview of some original / different approaches cited in related work of the papers? }
