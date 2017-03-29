@@ -10,7 +10,7 @@
 \usepackage{xcolor}
 
 \usepackage{hyperref}
-
+\usepackage{diagbox}
 \usepackage{listings}
 
 \newcommand{\todo}[1]{\textcolor{red}{\textbf{ToDo} [ \emph{#1} ]}}
@@ -47,6 +47,8 @@
   numbers=left
 }
 
+\graphicspath{{logs/}}
+
 
 
 
@@ -64,6 +66,8 @@
 
 \section*{Introduction}
 
+\todo{ ??? }
+
 \section{Mitigating stragglers/failures in Hadoop}
 
 \paragraph{Question 1.1}
@@ -79,7 +83,28 @@ We generated with \texttt{randomwriter} a dataset of 20 Go.
 We run sort benchmark, with and without speculation.
 We then re-do the same, but we also stress all the CPUs of one node during the executions.
 
-\todo{ figure + explain results }
+The results are available in appendix:
+
+\begin{table}[!ht]
+    \centering
+\begin{tabular}{|c|c|c|}
+    \hline
+    \backslashbox{Speculation}{Stress} & Without & With \\
+    \hline
+                False             &   \figurename~\ref{1.1.specOff.noStress}   &  \figurename~\ref{1.1.specOff.Stress}   \\
+    \hline
+                True             &   \figurename~\ref{1.1.specOn.noStress}   &  \figurename~\ref{1.1.specOn.Stress}    \\
+    \hline
+\end{tabular}
+\end{table}
+
+The interesting figures are the one with stress.
+When speculation is not enabled, we can see that the node stressed (\texttt{paravance-36}) is clearly slowing down the whole execution.
+It takes indeed around 1.4 more time than the other nodes to complete its tasks (35 against 25 seconds).
+With speculation enabled, we can see that we have killed tasks on this node:
+speculative tasks were launched on other nodes and, as they finished earlier, the original tasks were killed.
+This is more efficient: the stressed node is only around 1.16 slower than the other nodes (70 against 60 seconds).
+Speculative tasks thus seem to improve the performances of the application, as expected.
 
 
 \paragraph{Question 1.2}
@@ -124,6 +149,13 @@ We set $p \in \lbrace 0.05, 0.5, 1 \rbrace$.
 We run sort benchmark on the 5 Go dataset, and the word count benchmark on the 1 Go dataset.
 
 \todo{ figure + explain results }
+
+\newpage
+\appendix
+
+%% To easily comment if compilation of all figures is
+%% too long and is annoying when fixing small things
+\input{appendix}
 
 
 \end{document}

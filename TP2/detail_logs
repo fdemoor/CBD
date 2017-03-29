@@ -29,8 +29,8 @@ Question 1.2 :
 Question 1.1 :
 	written in report
 	
-Log 1 et 2 : sans stress, spec off
-Log 3 : avec stress, spec off
-Log 4 : avec stress, spec off
-Log 5 : avec stress, spec on
-Log 6 et 7 : sans stress, spec on
+Log 1 et 2 : sans stress, spec off 2 et 4
+Log 3 : avec stress, spec off 5
+Log 4 : avec stress, spec off 6
+Log 5 : avec stress, spec on 7
+Log 6 et 7 : sans stress, spec on 8 et 9
