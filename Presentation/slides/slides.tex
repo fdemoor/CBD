@@ -137,37 +137,19 @@
 
 \section{Introduction}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}
-    \todo{ ... }
-\end{frame}
-
 %%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Outline}
-    \tableofcontents
+\begin{frame}{Map-Reduce \cite{Dean:2008:MSD:1327452.1327492}}
+
+\todo{}
+
 \end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Data Skew Challenges}
-
-\begin{frame}{Outline}
-    \tableofcontents[currentsection]
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsection{Definition and Challenges}
-
-%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}{Skewness Definition [Wikipedia]}
 
 \citem{} \textbf{Asymmetry} of a probability distribution or a dataset distribution
 
-\vfill \pause
+\vfill \pause%
 
 \begin{cblock}{Skew Example}
 \begin{figure}
@@ -178,6 +160,22 @@
 \end{cblock}
 
 \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Data Skew Overview}
+
+\begin{frame}{Outline}
+    \tableofcontents[currentsection]
+\end{frame}
+
+\subsection{Challenges}
 
 %%%%%%%%%%%%%%%%%%%%
 
@@ -194,7 +192,7 @@ $\quad \longrightarrow$ \emph{Map-skew} and \emph{Reduce-skew}
 \calertitem{} A few tasks cause the job to take much longer
 \end{calertblock}
 
-\vfill \pause
+\vfill \pause%
 
 \begin{cblock}{What about speculative execution?}
 
@@ -223,7 +221,7 @@ $\quad \longrightarrow$ Not a solution for data skew
 \end{cblock}
 
 
-\vfill \pause
+\vfill \pause%
 
 \begin{cblock}{Heterogeneous Maps}
 
@@ -234,10 +232,14 @@ $\quad \longrightarrow$ Not a solution for data skew
 \end{cblock}
 
 
-\vfill \pause
+\vfill \pause%
 
 \begin{cblock}{Non-Homomorphic Map}
-\todo{Florestan: I don't know what to say here}
+
+\citem{} Map tasks can take many records as input instead of only one
+
+\citem{} Example: the data may already be partitionned by another map-reduce job
+
 \end{cblock}
 
 
@@ -262,7 +264,7 @@ $\quad \longrightarrow$ Balanced data allocation is difficult
 \end{cblock}
 
 
-\vfill \pause
+\vfill \pause%
 
 \begin{cblock}{Expensive Input}
 
@@ -286,6 +288,20 @@ $\quad \longrightarrow$ Balanced data allocation is difficult
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\subsection{Some existing algorithms}
+
+\begin{frame}{Avoiding data skew}
+  \begin{cblock}{General methods}
+    \citem{} Use different partitioning schemes to avoid partitioning skew
+
+    \citem{} Use a combiner \todo{Remind everyone what it is}
+
+    \citem{} Pre-processing data
+  \end{cblock}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \begin{frame}{Some existing algorithms}
 
 \begin{cblock}{LEEN \cite{ibrahim:hal-00822973}}
@@ -297,7 +313,7 @@ $\quad \longrightarrow$ Balanced data allocation is difficult
     
 \end{cblock}
 
-\vfill \pause
+\vfill \pause%
 
 \begin{cblock}{Load Balancing \cite{gufler2011handling}}
 
@@ -327,7 +343,7 @@ $\quad \longrightarrow$ Balanced data allocation is difficult
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{LEEN: Locality-awarE and fairness-awarE key partitioNing}
+\subsection{Handling Partitioning Skew}
 
 \begin{frame}{Outline}
     \tableofcontents[currentsection,currentsubsection]
@@ -342,12 +358,6 @@ aware key partitioning in MapReduce
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
-
-\subsection{Fine Partitioning and Dynamic Fragmentation}
-
-\begin{frame}{Outline}
-    \tableofcontents[currentsection,currentsubsection]
-\end{frame}
 
 \begin{frame}{Load Balancing \cite{gufler2011handling}}
 
@@ -428,7 +438,7 @@ aware key partitioning in MapReduce
 
 %%%%%%%%%%%%%%%%%%%%
 
-\subsection{Skewtune}
+\subsection{Handling Reduce Complexity}
 
 \begin{frame}{Outline}
     \tableofcontents[currentsection,currentsubsection]
@@ -464,7 +474,7 @@ aware key partitioning in MapReduce
 
 %%%%%%%%%%%%%%%%%%%%
 
-\subsection{Overview of other approaches}
+\subsection{Other Approaches Overview}
 
 \begin{frame}{Outline}
     \tableofcontents[currentsection,currentsubsection]
