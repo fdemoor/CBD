@@ -139,15 +139,14 @@
 
 %%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Map-Reduce \cite{Dean:2008:MSD:1327452.1327492}}
+\begin{frame}{Map-Reduce~\cite{Dean:2008:MSD:1327452.1327492}}
 
 \todo{}
 
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{map_reduce}
-    \caption{Map-Reduce overview [Wikipedia]}
-    \label{img:map_reduce}
+    \caption{Map-Reduce overview [Wikipedia]}\label{img:map_reduce}
 \end{figure}
 
 \end{frame}
@@ -305,45 +304,53 @@ $\quad \longrightarrow$ Balanced data allocation is difficult
 
     \citem{} Pre-processing data
   \end{cblock}
+
+  \begin{cblock}{Specific algorithms}
+    \citem{} LEEN
+
+    \citem{} Load Balancing
+
+    \citem{} Skewtune
+  \end{cblock}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}{Some existing algorithms}
 
-\begin{cblock}{LEEN \cite{ibrahim:hal-00822973}}
+\begin{cblock}{LEEN~\cite{ibrahim:hal-00822973}}
     \citem{} Addresses partitioning skew
-    
+
     \citem{} Higher locality and fair distribution of reduce inputs
-    
+
     \citem{} Up to 45\% of improvement on some workloads
-    
+
 \end{cblock}
 
 \vfill \pause%
 
-\begin{cblock}{Load Balancing \cite{gufler2011handling}}
+\begin{cblock}{Load Balancing~\cite{gufler2011handling}}
 
     \citem{} Addresses partitioning skew
-    
+
     \citem{} Proposes cost model to estimate amount of work
-    
+
     \citem{} Proposes two load balancing algorithms: Fine Partitioning and Dynamic Fragmentation
-    
+
 \end{cblock}
 
 \end{frame}
 
 \begin{frame}{Some existing algorithms}
 
-\begin{cblock}{SkewTune \cite{Kwon:2012:SMS:2213836.2213840}}
+\begin{cblock}{SkewTune~\cite{Kwon:2012:SMS:2213836.2213840}}
 
     \citem{} Addresses expensive record, heterogeneous maps, partitioning skew and expensive input
-    
+
     \citem{} Proactive repartition to fully utilize nodes
-    
+
     \citem{} Up to 4x improvement
-    
+
 \end{cblock}
 
 \end{frame}
@@ -356,29 +363,34 @@ $\quad \longrightarrow$ Balanced data allocation is difficult
     \tableofcontents[currentsection,currentsubsection]
 \end{frame}
 
-\begin{frame}{LEEN \cite{ibrahim:hal-00822973}}
+\begin{frame}{LEEN~\cite{ibrahim:hal-00822973}}
   \begin{cblock}{Solving Partitioning Skew}
-
   \citem{} LEEN algorithm for locality-aware and fairness-
 aware key partitioning in MapReduce
+
+  \citem{} Aims to solve the partitioning skew problem
+
+  \citem{} Heuristic to explore the space of possible distributions of $K$ keys on $N$ nodes
+
+  \citem{} Tradeoff between data locality and reducers's input fairness %yep, reducers's, fight me ;)
   \end{cblock}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Load Balancing \cite{gufler2011handling}}
+\begin{frame}{Load Balancing~\cite{gufler2011handling}}
 
 \begin{cblock}{Cost model}
     \citem{} Maximize resource usage: no idle reducer
-    
+
     \citem{} Estimate amount of work for each cluster of key $k$: $\omega(k)$
-    
+
     Depends on the number of tuples in the cluster and its byte size
-    
+
     \citem{} Associated bin packing problem is NP hard
-    
+
     \citem{} Monitoring clusters too expensive
-    
+
     $\longrightarrow$ Monitor partitions and compute average values for clusters
 \end{cblock}
 
@@ -387,23 +399,22 @@ aware key partitioning in MapReduce
 \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{costModel}
-    \caption{Left reducer gets more work than right reducer}
-    \label{img:costModel}
+    \caption{Left reducer gets more work than right reducer}\label{img:costModel}
 \end{figure}
 
 \end{frame}
 
-\begin{frame}{Load Balancing \cite{gufler2011handling}}
+\begin{frame}{Load Balancing~\cite{gufler2011handling}}
 
 \begin{cblock}{Fine Partitioning}
     \citem{} Create $p$ partitions with $p > r$ (number of reducers)
-    
+
     \citem{} High $p$: better load balancing quality, but more expensive monitoring
-    
+
     \citem{} Partition assignment using greedy approach
-    
+
     \citem{} Requires that all map tasks have completed
-    
+
     $\quad \longrightarrow$ What about reducer slow-start?
 \end{cblock}
 
@@ -412,22 +423,21 @@ aware key partitioning in MapReduce
 \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{fineP}
-    \caption{P1 most expensive: assigned to dedicated reducer}
-    \label{img:fineP}
+    \caption{P1 most expensive: assigned to dedicated reducer}\label{img:fineP}
 \end{figure}
 
 \end{frame}
 
-\begin{frame}{Load Balancing \cite{gufler2011handling}}
+\begin{frame}{Load Balancing~\cite{gufler2011handling}}
 
 \begin{cblock}{Dynamic Fragmentation}
     \citem{} Split excessively large partitions into $f$ fragments
-    
+
     \citem{} Fragments can be assigned to different reducers: need data replication
-    
+
     \citem{} Best partition assignment chosen using cost based strategy:
-    
-    \[ \mathcal{C} (R) = \omega (R) \cdot \left( 1 + \sigma (R) \right) ^e \]
+
+    \[ \mathcal{C} (R) = \omega (R) \cdot {\left( 1 + \sigma (R) \right)} ^e \]
 \end{cblock}
 
 \vfill
@@ -435,8 +445,7 @@ aware key partitioning in MapReduce
 \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{dynF}
-    \caption{P2 replicated on both reducers}
-    \label{img:dynF}
+    \caption{P2 replicated on both reducers}\label{img:dynF}
 \end{figure}
 
 \end{frame}
@@ -451,7 +460,7 @@ aware key partitioning in MapReduce
     \tableofcontents[currentsection,currentsubsection]
 \end{frame}
 
-\begin{frame}{SkewTune \cite{Kwon:2012:SMS:2213836.2213840}}
+\begin{frame}{SkewTune~\cite{Kwon:2012:SMS:2213836.2213840}}
   \begin{cblock}{SkewTune caracteristics}
     \citem{} A solution to the data skew problem from uneven distributions
 
@@ -469,7 +478,7 @@ aware key partitioning in MapReduce
   \end{cblock}
 \end{frame}
 
-\begin{frame}{SkewTune \cite{Kwon:2012:SMS:2213836.2213840}}
+\begin{frame}{SkewTune~\cite{Kwon:2012:SMS:2213836.2213840}}
   \begin{cblock}{Repartionionning}
     \citem{} Use srange partionning
 
