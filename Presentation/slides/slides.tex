@@ -468,7 +468,10 @@ aware key partitioning in MapReduce
 
     \citem{} Does not rely on synchronization barriers
   \end{cblock}
-  \vfill
+
+\end{frame}
+
+\begin{frame}
   \begin{cblock}{Principle}
     \citem{} Late skew detection: when a slot is available
 
@@ -476,11 +479,16 @@ aware key partitioning in MapReduce
 
     \citem{} Repartitions the rest of the task on the two slots
   \end{cblock}
+  \vfill
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{skewtune1}
+    \includegraphics[width=0.5\textwidth]{skewtune2}
+  \end{figure}
 \end{frame}
-
 \begin{frame}{SkewTune~\cite{Kwon:2012:SMS:2213836.2213840}}
   \begin{cblock}{Repartionionning}
-    \citem{} Use srange partionning
+    \citem{} Uses range partionning
 
     \citem{} Saves a straggler's output
 
@@ -507,7 +515,19 @@ aware key partitioning in MapReduce
 %%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}{Conclusion}
-\todo{}
+  \begin{cblock}{The data skew problem}
+    \citem{} Data skew arise from anormal distributions of data
+
+    \citem{} Load and execution time imbalance $\longrightarrow$ increased overall execution time
+  \end{cblock}
+
+  \begin{cblock}{Solutions}
+    \citem{} Specific algorithms for different kind of data skew (LEEN, load partitioning)
+
+    \citem{} Generic methods (Skewtune, hiring a better map-reduce developper)
+  \end{cblock}
+  \todo{Perspectives: skew in databases?}
+
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%
