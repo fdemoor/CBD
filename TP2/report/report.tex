@@ -126,7 +126,20 @@ During an execution, we kill the TaskTracker daemon on one node, with two differ
     \item After the completion of map tasks
 \end{itemize}
 
-\todo{ figure + explain results }
+\begin{table}[!ht]
+    \centering
+\begin{tabular}{|c|c|c|}
+    \hline
+    \backslashbox{Expiry time}{Completion of map tasks} & Before & After \\
+    \hline
+                30 seconds             &   \figurename~\ref{1.1.specOff.noStress}   &  \figurename~\ref{1.1.specOff.Stress}   \\
+    \hline
+                60 seconds             &   \figurename~\ref{1.1.specOn.noStress}   &  \figurename~\ref{1.1.specOn.Stress}    \\
+    \hline
+\end{tabular}
+\end{table}
+
+\todo{ explain 30s 60s no real difference, just takes longer to decide that node is dead, we only have killed after completion of maps: maps and reduce tasks killed, and maps are re-run }
 
 
 
@@ -148,7 +161,20 @@ This mean that reduce tasks start when fraction $p$ of map tasks are completed.
 We set $p \in \lbrace 0.05, 0.5, 1 \rbrace$.
 We run sort benchmark on the 5 Go dataset, and the word count benchmark on the 1 Go dataset.
 
-\todo{ figure + explain results }
+\begin{table}[!ht]
+    \centering
+\begin{tabular}{|c|c|c|c|}
+    \hline
+    \backslashbox{Benchmark}{Reduce slow-start} & 5\% & 50\% & 100\% \\
+    \hline
+                Sort             &   \figurename~\ref{1.1.specOff.noStress}   &  \figurename~\ref{1.1.specOff.Stress}   & \\
+    \hline
+                Word count             &   \figurename~\ref{1.1.specOn.noStress}   &  \figurename~\ref{1.1.specOn.Stress}    & \\
+    \hline
+\end{tabular}
+\end{table}
+
+\todo{ explain, word count is more map expensive so slow start should not influence too much, but difference should be visible with sort }
 
 \newpage
 \appendix
