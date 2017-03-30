@@ -59,7 +59,7 @@
 \author{Florestan de Moor}
 \author{Rémi Hutin}
 \affil{ENS Rennes, Université de Rennes 1}
-\date{24 Mars 2017}
+\date{March 31st, 2017}
 
 \maketitle
 
@@ -113,7 +113,7 @@ During an execution, a node failure may happen.
 The JobTracker receives regular heartbeat signal from the TaskTracker nodes.
 If it receives no heartbeat from a node, it waits for a given amount of time before considering it as dead.
 This is the expiry time.
-When it realize a node is dead, the JobTracker has to resubmit the dead node tasks to other nodes,
+When it realizes a node is dead, the JobTracker has to resubmit the dead node tasks to other nodes,
 and also rerun some previous completed tasks.
 
 In this question, we try to observe this experimentally.
@@ -132,15 +132,19 @@ During an execution, we kill the TaskTracker daemon on one node, with two differ
     \hline
     \backslashbox{Expiry time}{Completion of map tasks} & Before & After \\
     \hline
-                30 seconds             &   \figurename~\ref{1.1.specOff.noStress}   &  \figurename~\ref{1.1.specOff.Stress}   \\
+                30 seconds             &   -   &  \figurename~\ref{1.2.30s.reduce}   \\
     \hline
-                60 seconds             &   \figurename~\ref{1.1.specOn.noStress}   &  \figurename~\ref{1.1.specOn.Stress}    \\
+                60 seconds             &   -   &  \figurename~\ref{1.2.60s.reduce}    \\
     \hline
 \end{tabular}
 \end{table}
 
-\todo{ explain 30s 60s no real difference, just takes longer to decide that node is dead, we only have killed after completion of maps: maps and reduce tasks killed, and maps are re-run }
-
+We can see that there is not a significant difference between 30 and 60 seconds expiry time.
+In the latter, the JobTracker takes more time to detect the dead nodes, and thus to re-launch tasks, resulting in a slower execution.
+When a node TaskTracker is killed after the completion of map tasks,
+we observe that reduce tasks are re-launched on other nodes, but not only.
+Some map tasks have also to be run again.
+Therefore, it slows down the application a lot more than if the node had crashed before the completion of map tasks.
 
 
 \section{Application specific optimization in Hadoop}
@@ -167,14 +171,17 @@ We run sort benchmark on the 5 Go dataset, and the word count benchmark on the 1
     \hline
     \backslashbox{Benchmark}{Reduce slow-start} & 5\% & 50\% & 100\% \\
     \hline
-                Sort             &   \figurename~\ref{1.1.specOff.noStress}   &  \figurename~\ref{1.1.specOff.Stress}   & \\
+                Sort             &   \figurename~\ref{2.1.sort.5}   &  -   & \figurename~\ref{2.1.sort.100} \\
     \hline
-                Word count             &   \figurename~\ref{1.1.specOn.noStress}   &  \figurename~\ref{1.1.specOn.Stress}    & \\
+                Word count             &   \figurename~\ref{2.1.wc.5}   &  \figurename~\ref{2.1.wc.50}    & \figurename~\ref{2.1.wc.100} \\
     \hline
 \end{tabular}
 \end{table}
 
-\todo{ explain, word count is more map expensive so slow start should not influence too much, but difference should be visible with sort }
+Sort and word count are applications with different behaviors.
+Sort is more reduce-oriented.
+That's why we can see that starting earlier reduce tasks improves significantly the execution runtime.
+On the contrary, word count is map intensive, and the reduce slow-start value has little influence on the execution runtime.
 
 \newpage
 \appendix
