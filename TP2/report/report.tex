@@ -66,7 +66,7 @@
 
 \section*{Introduction}
 
-\todo{ ??? }
+\todo{ REMI: mini intro }
 
 \section{Mitigating stragglers/failures in Hadoop}
 
@@ -139,12 +139,21 @@ During an execution, we kill the TaskTracker daemon on one node, with two differ
 \end{tabular}
 \end{table}
 
+\textit{As we had to reduce the dataset size in order to have reasonable execution runtime,
+we were unable to kill a TaskTracker before the completion of map tasks.
+The map phase was indeed too fast.
+However, we had another try: we generated a dataset of 15 Go and we used 5 nodes from \texttt{paravance} cluster.
+We were able to kill a TaskTracker in these conditions before the end of map phase, using 30 seconds expiry time.
+The result of this execution is given in \figurename~\ref{1.2.30s.map}.}
+
 We can see that there is not a significant difference between 30 and 60 seconds expiry time.
 In the latter, the JobTracker takes more time to detect the dead nodes, and thus to re-launch tasks, resulting in a slower execution.
 When a node TaskTracker is killed after the completion of map tasks,
 we observe that reduce tasks are re-launched on other nodes, but not only.
 Some map tasks have also to be run again.
 Therefore, it slows down the application a lot more than if the node had crashed before the completion of map tasks.
+
+\todo{ explanations for map kill }
 
 
 \section{Application specific optimization in Hadoop}
@@ -165,6 +174,9 @@ This mean that reduce tasks start when fraction $p$ of map tasks are completed.
 We set $p \in \lbrace 0.05, 0.5, 1 \rbrace$.
 We run sort benchmark on the 5 Go dataset, and the word count benchmark on the 1 Go dataset.
 
+\textit{It seems there was a logging issue when running sort with $p = 0.5$ although the execution went well.
+We thus do not have charts to show for this execution.}
+
 \begin{table}[!ht]
     \centering
 \begin{tabular}{|c|c|c|c|}
@@ -182,6 +194,10 @@ Sort and word count are applications with different behaviors.
 Sort is more reduce-oriented.
 That's why we can see that starting earlier reduce tasks improves significantly the execution runtime.
 On the contrary, word count is map intensive, and the reduce slow-start value has little influence on the execution runtime.
+
+\section*{Conclusion}
+
+\todo{ REMI: mini conclu }
 
 \newpage
 \appendix
