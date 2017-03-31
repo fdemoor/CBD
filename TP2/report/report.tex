@@ -154,8 +154,8 @@ When a node TaskTracker is killed after the completion of map tasks,
 we observe that reduce tasks are re-launched on other nodes, but not only.
 Some map tasks have also to be run again.
 Therefore, it slows down the application a lot more than if the node had crashed before the completion of map tasks.
-
-\todo{ explanations for map kill }
+Indeed, we can see that in this case, only the map tasks of the dead
+nodes are run again.
 
 
 \section{Application specific optimization in Hadoop}
@@ -174,7 +174,7 @@ In this question, we generated with \texttt{randomwriter} a dataset of 5GB, and 
 We denote the reduce start parameter by $p$.
 This mean that reduce tasks start when fraction $p$ of map tasks are completed.
 We set $p \in \lbrace 0.05, 0.5, 1 \rbrace$.
-We run sort benchmark on the 5GB dataset, and the word count benchmark on the 1GB dataset.
+We run sort benchmark on the 5GB dataset, and the wordcount benchmark on the 1GB dataset.
 
 \textit{It seems there was a logging issue when running sort with $p = 0.5$ although the execution went well.
 We thus do not have charts to show for this execution.}
@@ -187,20 +187,22 @@ We thus do not have charts to show for this execution.}
     \hline
                 Sort             &   \figurename~\ref{2.1.sort.5}   &  -   & \figurename~\ref{2.1.sort.100} \\
     \hline
-                Word count             &   \figurename~\ref{2.1.wc.5}   &  \figurename~\ref{2.1.wc.50}    & \figurename~\ref{2.1.wc.100} \\
+                Wordcount             &   \figurename~\ref{2.1.wc.5}   &  \figurename~\ref{2.1.wc.50}    & \figurename~\ref{2.1.wc.100} \\
     \hline
 \end{tabular}
 \end{table}
 
-Sort and word count are applications with different behaviors.
+Sort and wordcount are applications with different behaviors.
 Sort is more reduce-oriented.
 That's why we can see that starting earlier reduce tasks improves significantly the execution runtime.
-On the contrary, word count is map intensive, and the reduce slow-start value has little influence on the execution runtime.
+On the contrary, wordcount is map intensive, and the reduce slow-start value has little influence on the execution runtime.
 
 \section*{Conclusion}
 
-\todo{ REMI: mini conclu }
-
+In this report, we presented and interpreted the results of our experiments.
+Firstly, we observed that speculatives tasks seem to improve the performances of the application when a node is straggling.
+Secondly, we observed how Hadoop reacts in case of node failure.
+Lastly, we were able to improve the sort benchmark execution runtime by starting reduce tasks earlier, while we couldn't improve the wordcount benchmark execution runtime.
 \newpage
 \appendix
 
