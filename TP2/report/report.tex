@@ -66,7 +66,9 @@
 
 \section*{Introduction}
 
-\todo{ REMI: mini intro }
+Hadoop is a java open source implementation of MapReduce, a leading programming model for data-intensive computing.
+We conducted different experiments to observe how Hadoop reacts to mitigate stragglers and failures, and to determine how to optimize a specific application in Hadoop.
+This report presents the results of our experiments.
 
 \section{Mitigating stragglers/failures in Hadoop}
 
@@ -79,7 +81,7 @@ Tasks which are still running on some nodes are launched again on nodes that hav
 
 In this question, we aim to observe this experimentally.
 We used 5 nodes in \texttt{paravance} cluster.
-We generated with \texttt{randomwriter} a dataset of 20 Go.
+We generated with \texttt{randomwriter} a dataset of 20GB.
 We run sort benchmark, with and without speculation.
 We then re-do the same, but we also stress all the CPUs of one node during the executions.
 
@@ -118,7 +120,7 @@ and also rerun some previous completed tasks.
 
 In this question, we try to observe this experimentally.
 We used 5 nodes in \texttt{parapluie} cluster.
-We generated with \texttt{randomwriter} a dataset of 5 Go.
+We generated with \texttt{randomwriter} a dataset of 5GB.
 We run executions with two different expiry times : 30 seconds and 60 seconds.
 During an execution, we kill the TaskTracker daemon on one node, with two different scenarios:
 \begin{itemize}
@@ -142,7 +144,7 @@ During an execution, we kill the TaskTracker daemon on one node, with two differ
 \textit{As we had to reduce the dataset size in order to have reasonable execution runtime,
 we were unable to kill a TaskTracker before the completion of map tasks.
 The map phase was indeed too fast.
-However, we had another try: we generated a dataset of 15 Go and we used 5 nodes from \texttt{paravance} cluster.
+However, we had another try: we generated a dataset of 15GB and we used 5 nodes from \texttt{paravance} cluster.
 We were able to kill a TaskTracker in these conditions before the end of map phase, using 30 seconds expiry time.
 The result of this execution is given in \figurename~\ref{1.2.30s.map}.}
 
@@ -168,11 +170,11 @@ Starting reduce tasks earlier spreads out the data transfer over time, which is 
 But on the other hand, reduce tasks occupy slots that may have been used by other tasks.
 
 We used 5 nodes in \texttt{parapluie} cluster.
-In this question, we generated with \texttt{randomwriter} a dataset of 5 Go, and with \texttt{randomtextwriter} a dataset of 1 Go.
-We denote the reduce start paramater by $p$.
+In this question, we generated with \texttt{randomwriter} a dataset of 5GB, and with \texttt{randomtextwriter} a dataset of 1GB.
+We denote the reduce start parameter by $p$.
 This mean that reduce tasks start when fraction $p$ of map tasks are completed.
 We set $p \in \lbrace 0.05, 0.5, 1 \rbrace$.
-We run sort benchmark on the 5 Go dataset, and the word count benchmark on the 1 Go dataset.
+We run sort benchmark on the 5GB dataset, and the word count benchmark on the 1GB dataset.
 
 \textit{It seems there was a logging issue when running sort with $p = 0.5$ although the execution went well.
 We thus do not have charts to show for this execution.}
