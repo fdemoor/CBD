@@ -141,13 +141,24 @@
 
 \begin{frame}{Map-Reduce~\cite{Dean:2008:MSD:1327452.1327492}}
 
-\todo{}
-
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{map_reduce}
     \caption{Map-Reduce overview [Wikipedia]}\label{img:map_reduce}
 \end{figure}
+
+\vfill \pause%
+
+\begin{table}
+    \centering
+    \scriptsize
+\begin{tabular}{ccccccc}
+&  & (key, value) pairs &  & $p$ partitions &  & \\ 
+Map & $\rightarrow$ & Clusters: & $\rightarrow$ & $\pi$ partitioning function & $\rightarrow$ & Reduce \\ 
+&  & $C(k) = \lbrace (k, v) \rbrace$ &  & $P(j) = \uplus_{\pi(k) = j} C(k)$ &  & \\ 
+\end{tabular}
+\caption{Focus on intermediate step between Map and Reduce}
+\end{table}
 
 \end{frame}
 
