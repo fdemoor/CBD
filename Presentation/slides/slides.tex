@@ -153,9 +153,9 @@
     \centering
     \scriptsize
 \begin{tabular}{ccccccc}
-&  & (key, value) pairs &  & $p$ partitions &  & \\ 
-Map & $\rightarrow$ & Clusters: & $\rightarrow$ & $\pi$ partitioning function & $\rightarrow$ & Reduce \\ 
-&  & $C(k) = \lbrace (k, v) \rbrace$ &  & $P(j) = \uplus_{\pi(k) = j} C(k)$ &  & \\ 
+&  & (key, value) pairs &  & $p$ partitions &  & \\
+Map & $\rightarrow$ & Clusters: & $\rightarrow$ & $\pi$ partitioning function & $\rightarrow$ & Reduce \\
+&  & $C(k) = \lbrace (k, v) \rbrace$ &  & $P(j) = \uplus_{\pi(k) = j} C(k)$ &  & \\
 \end{tabular}
 \caption{Focus on intermediate step between Map and Reduce}
 \end{table}
@@ -311,10 +311,12 @@ $\quad \longrightarrow$ Balanced data allocation is difficult
   \begin{cblock}{General methods}
     \citem{} Use different partitioning schemes to avoid partitioning skew
 
-    \citem{} Use a combiner \todo{Remind everyone what it is}
+    \citem{} Use a combiner
 
     \citem{} Pre-processing data
   \end{cblock}
+
+  \vfill
 
   \begin{cblock}{Specific algorithms}
     \citem{} LEEN
@@ -480,9 +482,9 @@ aware key partitioning in MapReduce
     \citem{} Does not rely on synchronization barriers
   \end{cblock}
 
-\end{frame}
+  \vfill
 
-\begin{frame}
+
   \begin{cblock}{Principle}
     \citem{} Late skew detection: when a slot is available
 
@@ -490,33 +492,19 @@ aware key partitioning in MapReduce
 
     \citem{} Repartitions the rest of the task on the two slots
   \end{cblock}
-  \vfill
+
+\end{frame}
+
+\begin{frame}{Skewtune on an example}
   \begin{figure}
     \centering
-    \includegraphics[width=0.5\textwidth]{skewtune1}
-    \includegraphics[width=0.5\textwidth]{skewtune2}
+    \includegraphics[width=0.9\textwidth]{skewtune1}
   \end{figure}
-\end{frame}
-\begin{frame}{SkewTune~\cite{Kwon:2012:SMS:2213836.2213840}}
-  \begin{cblock}{Repartionionning}
-    \citem{} Uses range partionning
-
-    \citem{} Saves a straggler's output
-
-    \citem{} Repartitions only the unprocessed data
-  \end{cblock}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%
-
-\subsection{Other Approaches Overview}
-
-\begin{frame}{Outline}
-    \tableofcontents[currentsection,currentsubsection]
-\end{frame}
-
-\begin{frame}{Overview of other approaches}
-\todo{ brief overview of some original / different approaches cited in related work of the papers? }
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.9\textwidth]{skewtune2}
+    % \caption{Example of a repartition}
+  \end{figure}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -537,7 +525,6 @@ aware key partitioning in MapReduce
 
     \citem{} Generic methods (Skewtune, hiring a better map-reduce developper)
   \end{cblock}
-  \todo{Perspectives: skew in databases?}
 
 \end{frame}
 
