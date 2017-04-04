@@ -149,16 +149,11 @@
 
 \vfill \pause%
 
-\begin{table}
+\begin{figure}
     \centering
-    \scriptsize
-\begin{tabular}{ccccccc}
-&  & (key, value) pairs &  & $p$ partitions &  & \\
-Map & $\rightarrow$ & Clusters: & $\rightarrow$ & $\pi$ partitioning function & $\rightarrow$ & Reduce \\
-&  & $C(k) = \lbrace (k, v) \rbrace$ &  & $P(j) = \uplus_{\pi(k) = j} C(k)$ &  & \\
-\end{tabular}
-\caption{Focus on intermediate step between Map and Reduce}
-\end{table}
+    \includegraphics[width=0.95\textwidth]{map_reduce_focus}
+    \caption{Focus on intermediate step between Map and Reduce}
+\end{figure}
 
 \end{frame}
 
@@ -200,14 +195,17 @@ Map & $\rightarrow$ & Clusters: & $\rightarrow$ & $\pi$ partitioning function & 
 
 \begin{calertblock}{Data skew consequences}
 
-\calertitem{} Highly variable task runtimes
-
 \calertitem{} Computational load unbalance among map / reduce tasks
 
 $\quad \longrightarrow$ \emph{Map-skew} and \emph{Reduce-skew}
 
 \calertitem{} A few tasks cause the job to take much longer
 \end{calertblock}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{skew_runtime}
+\end{figure}
 
 \vfill \pause%
 
@@ -519,6 +517,8 @@ aware key partitioning in MapReduce
 
     \citem{} Load and execution time imbalance $\longrightarrow$ increased overall execution time
   \end{cblock}
+  
+  \vfill \pause%
 
   \begin{cblock}{Solutions}
     \citem{} Specific algorithms for different kind of data skew (LEEN, load partitioning)
