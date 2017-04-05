@@ -314,7 +314,7 @@ $\quad \longrightarrow$ Balanced data allocation is difficult
     \citem{} Pre-processing data
   \end{cblock}
 
-  \vfill
+  \vfill\pause%
 
   \begin{cblock}{Specific algorithms}
     \citem{} LEEN
@@ -380,10 +380,15 @@ $\quad \longrightarrow$ Balanced data allocation is difficult
 aware key partitioning in MapReduce
 
   \citem{} Aims to solve the partitioning skew problem
+  \end{cblock}
 
-  \citem{} Heuristic to explore the space of possible distributions of $K$ keys on $N$ nodes
+  \vfill\pause
+  \begin{cblock}{Principle}
+    \citem{} Asynchronous maps and reduces
 
-  \citem{} Tradeoff between data locality and reducers's input fairness %yep, reducers's, fight me ;)
+    \citem{} Heuristic to explore the space of possible distributions of $K$ keys on $N$ nodes
+
+    \citem{} Tradeoff between data locality and reducers's input fairness %yep, reducers's, fight me ;)
   \end{cblock}
 \end{frame}
 
@@ -480,7 +485,7 @@ aware key partitioning in MapReduce
     \citem{} Does not rely on synchronization barriers
   \end{cblock}
 
-  \vfill
+  \vfill\pause%
 
 
   \begin{cblock}{Principle}
@@ -517,7 +522,7 @@ aware key partitioning in MapReduce
 
     \citem{} Load and execution time imbalance $\longrightarrow$ increased overall execution time
   \end{cblock}
-  
+
   \vfill \pause%
 
   \begin{cblock}{Solutions}
